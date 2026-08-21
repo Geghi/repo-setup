@@ -1,0 +1,51 @@
+# CLAUDE.md
+
+Guidance for AI agents in this repo. `AGENTS.md` points here.
+
+## Project
+
+{{ONE_SENTENCE_PROJECT_DESCRIPTION}}
+
+## Commands
+
+```bash
+{{LINT_TYPECHECK_TEST_COMMANDS}}
+```
+
+Never run the dev server without asking first. For test workflow/layer
+selection, use the `testing` skill.
+
+## Layout
+
+{{ANNOTATED_TREE_OF_TOP_LEVEL_DIRS}}
+
+## Mandatory rules
+
+**TDD — non negoziabile.** Ogni modifica (feature, fix, refactor) va fatta con
+approccio test-driven: scrivi il test che fallisce prima del codice, poi
+implementa fino a farlo passare. Usa sempre la skill `tdd` per il ciclo
+red-green-refactor e la skill `testing` per scegliere il layer giusto e le
+convenzioni dei test. Nessuna modifica va considerata completa senza la
+copertura di test corrispondente.
+
+**Changelog** — after any code change, write `changelog/{datetime}_{title}.md`
+summarizing edits.
+
+**Git stash** — always named: `git stash push -u -m "<name>"` /
+`git stash pop "stash^{/<name>}"`. Never bare stash/pop.
+
+**Worktree discipline** — if the session's working directory is a git worktree,
+all reads and edits stay inside that worktree's path. Never operate on another
+worktree's checkout.
+
+**Env vars** — only read/edit `.env.example`. Never read `.env.local`.
+
+{{REPO_SPECIFIC_RULES}}
+
+## Agent workflows
+
+- Issues: Multica via `multica` CLI (`{{REPO_LABEL}}` label) — `docs/agents/issue-tracker.md`
+- Triage labels: `docs/agents/triage-labels.md`
+- Domain docs: `CONTEXT.md` (see `docs/agents/context-format.md`), `docs/adr/`
+  (see `docs/agents/adr-format.md`) — created lazily
+{{MAP_POINTER_LINE}}
