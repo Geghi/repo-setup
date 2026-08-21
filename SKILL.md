@@ -1,8 +1,6 @@
 # repo-setup — Giacomo's standard repository setup
 
 Orchestrator that brings any repository (new or existing) to my standard setup.
-This skill is **not** globally listed on purpose: it is invoked by path
-("read ~/virtual_desktop/projects/shared-agents/repo-setup/SKILL.md and run it").
 
 It is repo-unaware: everything repo-specific is asked interactively or inferred
 by scanning. Each phase is self-contained and re-runnable on its own — the user
