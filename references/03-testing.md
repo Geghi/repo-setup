@@ -19,10 +19,10 @@ CI). Then confirm with the user:
 
 ## 2. Install the skills
 
-- **tdd**: vendor `mattpocock/skills` → `tdd` into `.claude/skills/tdd/`
-  (same mechanism as igea-saas' `skills-lock.json`; if no installer is at hand,
-  copy the folder from `~/virtual_desktop/projects/igea/igea-saas/.claude/skills/tdd/`
-  — it is generic, no igea references).
+- **tdd**: `npx skills add mattpocock/skills --skill tdd` (installs into
+  `.agents/skills/tdd/`, symlinks `.claude/skills/tdd`, records it in
+  `skills-lock.json`). Generic — never edit it; it reads `GLOSSARY.md`, which
+  in our repos is `CONTEXT.md`, and that's fine.
 - **testing**: copy `templates/skills/testing/SKILL.md` →
   `.claude/skills/testing/SKILL.md` and fill every `{{PLACEHOLDER}}` with the
   answers from step 1. The non-negotiable rules section is copied verbatim —
@@ -43,7 +43,14 @@ convenzioni dei test. Nessuna modifica va considerata completa senza la
 copertura di test corrispondente.
 ```
 
-## 4. Wire-up
+## 4. Evidence
+
+Copy `templates/docs/agents/evidence.md` → `docs/agents/evidence.md` and fill
+every `{{PLACEHOLDER}}` with the real commands and main path from step 1. Ship
+reads it to decide what proof goes in the PR. Reference example of a filled
+version: igea-livekit-agent's `docs/agents/evidence.md`.
+
+## 5. Wire-up
 
 - If a `tests/` folder exists, add a 3-line `tests/AGENTS.md` pointing at the
   `testing` skill (single source of truth, don't duplicate).

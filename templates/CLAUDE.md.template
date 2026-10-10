@@ -46,6 +46,7 @@ worktree's checkout.
 
 - Issues: Multica via `multica` CLI (`{{REPO_LABEL}}` label) — `docs/agents/issue-tracker.md`
 - Triage labels: `docs/agents/triage-labels.md`
+- Issue skills: `/to-prd` (context → PRD issue), `/to-issues` (PRD → vertical-slice issues), `/triage` (state machine, agent briefs)
 - Domain docs: `CONTEXT.md` (see `docs/agents/context-format.md`), `docs/adr/`
   (see `docs/agents/adr-format.md`) — created lazily
 {{MAP_POINTER_LINE}}

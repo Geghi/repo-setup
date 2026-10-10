@@ -49,13 +49,30 @@ Ensure the workspace has the triage labels (`needs-triage`, `needs-info`,
 `ready-for-agent`, `ready-for-human`) and the repo label; create missing ones
 only after asking.
 
-## 4. CLAUDE.md block
+## 4. Install the tracker skills (mandatory — the docs alone are inert)
+
+The docs above describe the tracker; these three skills are what *use* it.
+Copy verbatim (no placeholders) into `.claude/skills/`:
+
+- `templates/skills/to-prd/` → `.claude/skills/to-prd/` — conversation → PRD → issue (`ready-for-agent`)
+- `templates/skills/to-issues/` → `.claude/skills/to-issues/` — PRD/plan → tracer-bullet issues
+- `templates/skills/triage/` → `.claude/skills/triage/` (+ `AGENT-BRIEF.md`, `OUT-OF-SCOPE.md`) — triage state machine, agent briefs, `.out-of-scope/`
+
+They speak in canonical roles (`needs-triage`, `needs-info`, `ready-for-agent`,
+`ready-for-human`, `wontfix`, `bug`, `enhancement`); `docs/agents/triage-labels.md`
+is the mapping they read. If the workspace uses different category labels (e.g.
+`Feature` instead of `enhancement`), add a **Category → label** row to that doc.
+`triage` step 4 mentions `/grill-with-docs`: fine if the repo has it, otherwise
+the agent just interviews the user inline — no need to install it.
+
+## 5. CLAUDE.md block
 
 Append to the repo's Agent workflows section:
 
 ```md
 - Issues: Multica via `multica` CLI (`{{REPO_LABEL}}` label) — `docs/agents/issue-tracker.md`
 - Triage labels: `docs/agents/triage-labels.md`
+- Issue skills: `/to-prd` (context → PRD issue), `/to-issues` (PRD → vertical-slice issues), `/triage` (state machine, agent briefs)
 ```
 
 ## Safety rules (bake into every generated doc)

@@ -11,12 +11,12 @@ can say "run only the docs phase".
 1. **Locate the target repo.** You must be in (or be told) the root of a git
    repository. If not in one, ask for the path. Never set up this skill's own repo.
 2. **Detect new vs existing.** Existing = has source code beyond scaffolding.
-   Also note per-phase state: `.claude/ship.md` present? `docs/agents/issue-tracker.md`
-   present? `CLAUDE.md` present? tests configured? A phase already done is skipped
+   Also note per-phase state: `.claude/ship.md` present? `docs/agents/issue-tracker.md` + `.claude/skills/triage/`
+   present? `CLAUDE.md` present? tests configured? `docs/agents/evidence.md` present? A phase already done is skipped
    unless the user asks to redo it.
 3. **Confirm phases.** Default: all four, in order. Ask once, up front, which to run:
    - **ship** → `references/01-ship.md`
-   - **tracker (Multica)** → `references/02-tracker.md`
+   - **tracker (Multica)** → `references/02-tracker.md` (docs + the `to-prd`/`to-issues`/`triage` skills)
    - **testing/TDD** → `references/03-testing.md`
    - **docs + code map** → `references/04-docs.md`
 4. **Run each selected phase** by reading its reference file (paths relative to
