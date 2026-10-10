@@ -19,10 +19,8 @@ CI). Then confirm with the user:
 
 ## 2. Install the skills
 
-- **tdd**: `npx skills add mattpocock/skills --skill tdd` (installs into
-  `.agents/skills/tdd/`, symlinks `.claude/skills/tdd`, records it in
-  `skills-lock.json`). Generic — never edit it; it reads `GLOSSARY.md`, which
-  in our repos is `CONTEXT.md`, and that's fine.
+- **tdd**: copy `templates/skills/tdd/` → `.claude/skills/tdd/` (generic, no
+  placeholders).
 - **testing**: copy `templates/skills/testing/SKILL.md` →
   `.claude/skills/testing/SKILL.md` and fill every `{{PLACEHOLDER}}` with the
   answers from step 1. The non-negotiable rules section is copied verbatim —
@@ -55,4 +53,4 @@ version: igea-livekit-agent's `docs/agents/evidence.md`.
 - If a `tests/` folder exists, add a 3-line `tests/AGENTS.md` pointing at the
   `testing` skill (single source of truth, don't duplicate).
 - Ensure the test commands land in CLAUDE.md's Commands section and, if the
-  ship phase ran, in `.claude/ship.md`'s Commands section.
+  ship phase ran, in `.agents/ship.md`'s Commands section.

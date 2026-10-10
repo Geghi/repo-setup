@@ -1,20 +1,13 @@
 # Phase 1 — ship
 
-Goal: the repo has a working `/ship` pipeline (`.claude/ship.md` + reviewer agents).
+Goal: the repo has a working `/ship` pipeline (`.agents/ship.md` + reviewer agents).
 
-1. If `.claude/ship.md` already exists in the target repo, report "ship already
-   initialized" and stop this phase (offer to revisit it only if the user asks).
-2. Check the ship skill is installed: `~/.claude/skills/ship/SKILL.md` must exist.
-   If missing, have the user install it first:
-   ```bash
-   git clone https://github.com/Geghi/ship ~/virtual_desktop/projects/shared-agents/ship
-   ln -s ~/virtual_desktop/projects/shared-agents/ship ~/.claude/skills/ship
-   ```
-3. Install the `pr` skill: `npx skills add mattpocock/skills --skill pr`
-   (into `.agents/skills/pr/`, symlinked from `.claude/skills/pr`). Ship writes
-   the PR body with it; the full ship report stays in the terminal.
-4. Run the ship guided setup: read `~/.claude/skills/ship/references/init.md`
-   and follow it exactly (investigate → conversation → write `.claude/ship.md`
+1. Copy `templates/skills/ship/` → `.claude/skills/ship/` and
+   `templates/skills/pr/` → `.claude/skills/pr/`. Ship writes the PR body with
+   `pr`; the full ship report stays in the terminal.
+2. If `.agents/ship.md` already exists, stop here ("ship already initialized";
+   revisit only if asked). Otherwise run the ship guided setup: read `.claude/skills/ship/references/init.md`
+   and follow it exactly (investigate → conversation → write `.agents/ship.md`
    and `.claude/agents/ship/…` reviewers). That file is the single source of
    truth for this phase — do not duplicate its logic here.
 
