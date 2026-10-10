@@ -5,31 +5,28 @@ codebases, a "System map" for agents (Van Clief's icm-architect form).
 
 ## 1. Documentation skeleton
 
-- Create `docs/adr/`, `docs/prd/`, `docs/agents/`, `changelog/` (empty dirs are
+- Create `docs/adr/`, `docs/prd/`, `docs/agents/` (empty dirs are
   fine; `.gitkeep` if needed).
+- Copy `templates/skills/{grill-with-docs,grilling,domain-modeling,improve-codebase-architecture}/`
+  → `.claude/skills/` — they create and maintain `CONTEXT.md` and ADRs.
+  `improve-codebase-architecture` also needs `codebase-design` (phase 03).
+- **Coding standards**: copy `templates/CODING_STANDARDS.md.template` →
+  `CODING_STANDARDS.md` (repo root). Fill it from the scan — conventions the
+  code already follows consistently (helpers everyone uses, error/logging
+  shape, API contract, auth pattern) — and confirm with the user. Existing repo:
+  move code-writing rules out of `CLAUDE.md` into it, leave a pointer. New repo
+  with nothing to infer: one placeholder-free section or none; it grows lazily.
 - Copy format guides into `docs/agents/`:
   - `templates/adr/ADR-FORMAT.md` → `docs/agents/adr-format.md`
   - `templates/adr/CONTEXT-FORMAT.md` → `docs/agents/context-format.md`
-- **Lazy creation rule** (state it in CLAUDE.md's Agent workflows): `CONTEXT.md`,
+- **Lazy creation rule** (the template's table already says it): `CONTEXT.md`,
   ADRs and PRDs are created when first needed, never pre-filled with invented
-  content. PRDs: `docs/prd/YYYY-MM-DD-<slug>.md`. Changelog: after any code
-  change, write `changelog/{datetime}_{title}.md`.
+  content. PRDs: `docs/prd/YYYY-MM-DD-<slug>.md`.
 
-## 2. CLAUDE.md block
+## 2. CLAUDE.md
 
-Append to Agent workflows:
-
-```md
-- Domain docs: `CONTEXT.md` (glossary, see `docs/agents/context-format.md`),
-  `docs/adr/` (see `docs/agents/adr-format.md`) — created lazily
-- Changelog — after any code change, write `changelog/{datetime}_{title}.md`
-- Code map (existing repos only): `map/` is how you *navigate* the repo —
-  start at `map/CLAUDE.md` (clusters, flows, name collisions) to find where
-  something lives before grepping `src/`; open cards only when needed.
-  Keeping it true is part of every change: when you change code, update in
-  the same change every map card that cites or describes that code (fix the
-  `path:line` citations, flows, names), or mark it `stale` if you can't.
-```
+Repo has a map → fill the template's `{{MAP_RULE_LINE}}` and `{{MAP_ROW}}`.
+No map → delete both. Nothing else.
 
 ## 3. System map (existing repos only)
 
@@ -45,5 +42,5 @@ exist. For an existing codebase:
    `path:line`, never copy code; dead/aspirational code marked `ghost`).
 4. It is fine to stop after slice 1–2 (structure + object stubs) and leave
    remaining cards as incremental work — say so in the closing summary.
-5. Add the Code map block from section 2 to the repo's CLAUDE.md (the map
-   catalog itself lives in `map/CLAUDE.md`).
+5. Fill the map placeholders from section 2 (the map itself lives in
+   `map/CLAUDE.md`).

@@ -1,0 +1,16 @@
+# Coding standards
+
+How code in this repo must be written. Read it before writing code; `/ship`'s
+standards reviewer checks every diff against it. Workflow rules (TDD, commands,
+git, docs) live in `CLAUDE.md`, not here.
+
+One section per rule: **the rule**, *why* (the failure it prevents), and where
+the canonical example lives. A rule without a why gets broken the first time it
+is inconvenient. Delete this paragraph once filled.
+
+## {{RULE_NAME}}
+
+{{The rule, imperative, one or two sentences. Name the exact helper/file to use.}}
+
+**Why:** {{the concrete failure it prevents}}.
+**Example:** `{{path/to/canonical/file.ts}}`.

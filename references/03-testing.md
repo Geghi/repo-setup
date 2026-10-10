@@ -19,8 +19,8 @@ CI). Then confirm with the user:
 
 ## 2. Install the skills
 
-- **tdd**: copy `templates/skills/tdd/` → `.claude/skills/tdd/` (generic, no
-  placeholders).
+- **tdd**: copy `templates/skills/tdd/` and `templates/skills/codebase-design/`
+  (tdd calls it) → `.claude/skills/`. Generic, no placeholders.
 - **testing**: copy `templates/skills/testing/SKILL.md` →
   `.claude/skills/testing/SKILL.md` and fill every `{{PLACEHOLDER}}` with the
   answers from step 1. The non-negotiable rules section is copied verbatim —
@@ -28,18 +28,9 @@ CI). Then confirm with the user:
   short section; use igea-saas' testing skill as the reference example of a
   fully filled version.
 
-## 3. CLAUDE.md block (verbatim, Italian)
+## 3. CLAUDE.md
 
-Append under Mandatory rules:
-
-```md
-**TDD — non negoziabile.** Ogni modifica (feature, fix, refactor) va fatta con
-approccio test-driven: scrivi il test che fallisce prima del codice, poi
-implementa fino a farlo passare. Usa sempre la skill `tdd` per il ciclo
-red-green-refactor e la skill `testing` per scegliere il layer giusto e le
-convenzioni dei test. Nessuna modifica va considerata completa senza la
-copertura di test corrispondente.
-```
+The template already has the TDD line. Nothing to add.
 
 ## 4. Evidence
 

@@ -2,6 +2,7 @@
 name: ship
 description: Branch, commit, multi-agent parallel code review, fix, lint/typecheck, docs update, push and PR — a repo-agnostic shipping gate. Use when the user says "ship this", "ship it", "review and ship", "manda in review", or invokes /ship.
 user-invocable: true
+version: 2
 ---
 
 # ship
@@ -14,9 +15,29 @@ The skill is repo-agnostic. Everything repo-specific lives in **`.agents/ship.md
 in the repo, plus the agents under `.claude/agents/<namespace>/`. Both are
 generated from `templates/` at setup — see `references/init.md`.
 
-## 0 — Config
+## 0 — Version and config
 
-Read `.agents/ship.md` from `git rev-parse --show-toplevel`.
+**Version check, before anything else.** The source of truth is
+`~/virtual_desktop/projects/shared-agents/repo-setup/templates/skills/ship/`.
+Compare its `SKILL.md` frontmatter `version` with this repo's
+`.claude/skills/ship/SKILL.md`:
+
+- Repo has no `.claude/skills/ship/`, or its version is lower → tell the user
+  ("ship vN in repo-setup, this repo has vM / none") and **ask to update before
+  proceeding**. Yes → copy the whole folder over `.claude/skills/ship/`, commit
+  it alone (`chore(ship): update skill to vN`), then continue with the new
+  version. No → continue with what's there.
+- Source folder missing (another machine) → skip the check silently.
+
+Then read `.agents/ship.md` from `git rev-parse --show-toplevel`.
+
+**Only a legacy `.claude/ship.md`?** The repo uses the old format. Offer to
+migrate before proceeding: move it to `.agents/ship.md`; turn "Auto-fix" into
+"Never fix" (keep its never-touch list, drop the whitelist); rewrite Delivery
+per `templates/ship.md` (PR body via `pr`, update an open PR); in each repo
+reviewer, `autofix` → `needs_user`; delete any repo generalist reviewer whose
+job the bundled `review-general` + `review-standards` now do, moving its
+code-writing rules into `CODING_STANDARDS.md`. Show the diff, commit it alone.
 
 **Missing?** The repo isn't set up: read `references/init.md` and run the guided
 setup. Don't run the pipeline in the same turn — setup ends, the user reviews, they
@@ -84,7 +105,12 @@ every other reviewer gets. It has no persisted file in the repo because it
 doesn't need one: it's the same judge on every run, everywhere. Repo-specific
 reviewers in `ship.md` are additions on top of it, not replacements for it.
 
-**Spec reviewer — always included when a spec exists.** Does the code do what
+**Standards reviewer — always included.** Read `references/review-standards.md`
+and launch it the same way as the generalist. It checks the diff against the
+repo's `CODING_STANDARDS.md` plus a code-smell baseline; repo-specific rules
+belong in that file, not in a custom reviewer.
+
+**Spec reviewer — always included.** Does the code do what
 was asked? Find the spec: an issue key in the branch/commits (fetched via the
 tracker doc `ship.md` points at), a path in the conversation, or the intent
 itself. Launch one more `general-purpose` subagent in the same batch with the

@@ -10,7 +10,7 @@ each should obsess over.*
 ## 1. Investigate first
 
 - Git root, remote, default branch, branch naming (`git branch -r`)
-- `CLAUDE.md` / `AGENTS.md` / `CONTEXT.md` / `README` — the repo's own rules are the
+- `CLAUDE.md` / `AGENTS.md` / `CODING_STANDARDS.md` / `CONTEXT.md` / `README` — the repo's own rules are the
   raw material for checklists and never-fix rules
 - `package.json` scripts (or Makefile, `pyproject.toml`, `go.mod`) → lint,
   typecheck, test, and the install command
@@ -42,6 +42,8 @@ a few at a time, not a wall — and let the user redirect:
   other check meant anything, and a repo whose code ships without a human reading
   it has nothing else guarding it. Use `templates/review-tests.md`. Skip it only
   when the repo genuinely has no test suite.
+  The standards reviewer and the Spec reviewer are bundled too. Code-writing
+  rules go in `CODING_STANDARDS.md` — never a reviewer just to enforce them.
   Beyond that, *specialists*: propose 0–3, and only for a real recurring risk this
   repo has actually hit
   (tenancy isolation, data security, query performance, API contract stability,

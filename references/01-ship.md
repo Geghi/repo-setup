@@ -21,3 +21,14 @@ Notes for the conversation (my defaults, still confirm):
   every reviewer fresh, max 2 rounds; intent/product findings are never fixed.
   Only `ship.md`'s base branch feeds this — make sure it is the branch the team
   integrates on (e.g. `test`), not the release branch.
+
+## Updating ship
+
+- Source of truth: `templates/skills/ship/`. Every change → bump `version:` in
+  its `SKILL.md` frontmatter, or repos won't see the update.
+- Each repo runs its own copy (`.claude/skills/ship/`). At every `/ship` the
+  skill compares versions and asks to update before proceeding.
+- **Transition:** `~/.claude/skills/ship` is a symlink to `templates/skills/ship/`
+  so repos without a local copy (or with a legacy `.claude/ship.md`) get the
+  install/migration prompt. Once every repo has its local copy:
+  `rm ~/.claude/skills/ship`.

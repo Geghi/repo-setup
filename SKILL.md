@@ -16,16 +16,18 @@ can say "run only the docs phase".
    unless the user asks to redo it.
 3. **Confirm phases.** Default: all four, in order. Ask once, up front, which to run:
    - **ship** → `references/01-ship.md`
-   - **tracker (Multica)** → `references/02-tracker.md` (docs + the `to-prd`/`to-issues`/`triage` skills)
+   - **tracker (Multica)** → `references/02-tracker.md` (docs + the `to-tickets`/`triage` skills)
    - **testing/TDD** → `references/03-testing.md`
    - **docs + code map** → `references/04-docs.md`
 4. **Run each selected phase** by reading its reference file (paths relative to
    this skill's directory) and following it. Ask questions phase by phase, a few
    at a time — not a wall up front.
-5. **CLAUDE.md**: phases append their blocks to the target repo's `CLAUDE.md`.
-   If the repo has none, first create it from `templates/CLAUDE.md.template`
-   (fill Project/Commands/Layout from the scan or by asking). If one exists,
-   merge: never overwrite existing content, add only the missing standard blocks.
+5. **CLAUDE.md** stays short: rules as one-liners + a "where to find things"
+   table + commands (`templates/CLAUDE.md.template`). Details go in
+   `CODING_STANDARDS.md` (how to write code) and `docs/agents/workflow.md`
+   (how to work, from `templates/docs/agents/workflow.md`). No CLAUDE.md →
+   create it from the template. Existing one → reshape it to the template, moving
+   long rules into those two files; never drop a rule.
    Also copy `templates/AGENTS.md` if the repo has no `AGENTS.md`.
 6. **Close with a summary**: what was created/changed, what remains manual
    (e.g. `multica login`, plugin install, creating the GitHub repo/remote).
