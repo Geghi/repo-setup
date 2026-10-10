@@ -29,7 +29,9 @@ can say "run only the docs phase".
    create it from the template. Existing one → reshape it to the template, moving
    long rules into those two files; never drop a rule.
    Also copy `templates/AGENTS.md` if the repo has no `AGENTS.md`.
-6. **Close with a summary**: what was created/changed, what remains manual
+6. **Always** copy `templates/skills/{retro,writing-for-agents}/` → `.claude/skills/`
+   (not tied to a phase).
+7. **Close with a summary**: what was created/changed, what remains manual
    (e.g. `multica login`, plugin install, creating the GitHub repo/remote).
 
 ## Conventions

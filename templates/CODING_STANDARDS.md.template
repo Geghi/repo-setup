@@ -1,7 +1,8 @@
 # Coding standards
 
-How code in this repo must be written. Read it before writing code; `/ship`'s
-standards reviewer checks every diff against it. Workflow rules (TDD, commands,
+How code in this repo must be written. Enforced at review: `/ship`'s standards
+reviewer checks every diff against it. A fixed pattern (banned API, import shape)
+is better as a lint rule or hook; keep here what needs judgement. Workflow rules (TDD, commands,
 git, docs) live in `CLAUDE.md`, not here.
 
 One section per rule: **the rule**, *why* (the failure it prevents), and where

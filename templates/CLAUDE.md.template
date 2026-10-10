@@ -6,7 +6,7 @@
 
 - **TDD — non negoziabile.** Test che fallisce prima del codice, poi implementa.
   Skill `tdd` + `testing`. Nessuna modifica è completa senza test.
-- **Code** follows [CODING_STANDARDS.md](CODING_STANDARDS.md). Read it before writing code.
+- **Code** follows [CODING_STANDARDS.md](CODING_STANDARDS.md); `/ship` reviews every diff against it.
 - **Workflow** (stash, env, dev server, layout, repo-specific process):
   [docs/agents/workflow.md](docs/agents/workflow.md).
 {{MAP_RULE_LINE — only if phase 04 built a map: "- **Map is part of the diff**: update affected cards in the same session — [map/CLAUDE.md](map/CLAUDE.md)." Delete otherwise.}}

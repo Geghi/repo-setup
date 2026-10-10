@@ -18,3 +18,5 @@ Copied as-is (no placeholders), into `.claude/skills/<name>/`:
 | `grilling/` | 04-docs | mattpocock/skills |
 | `domain-modeling/` | 04-docs | mattpocock/skills (glossary → `CONTEXT.md`) |
 | `improve-codebase-architecture/` | 04-docs | mattpocock/skills, needs `codebase-design` + `grilling` + `domain-modeling` (glossary → `CONTEXT.md`) |
+| `retro/` | any | mattpocock/skills — `/retro`: session → environment improvements |
+| `writing-for-agents/` | any | mattpocock/skills, needed by `retro` |
