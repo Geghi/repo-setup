@@ -2,7 +2,7 @@
 name: ship
 description: Branch, commit, multi-agent parallel code review, fix, lint/typecheck, docs update, push and PR — a repo-agnostic shipping gate. Use when the user says "ship this", "ship it", "review and ship", "manda in review", or invokes /ship.
 user-invocable: true
-version: 2
+version: 4
 ---
 
 # ship
@@ -220,6 +220,10 @@ concrete fix plan.
 green when it pins a code fix); when a new test passes on the first run, prove
 it can fail with a throwaway mutation of the code it guards, then restore.
 Never weaken or delete an existing assertion to make a test pass.
+"Needs a harness / test setup" is not a reason to skip: first look for an
+existing one (test helpers folder, mocks and fixtures in sibling tests of the
+same layer) and use it. Only if none exists, build the minimal one. A coverage
+gap goes to Merge Danger only after round 2, naming what you searched.
 
 Commit each round separately (`fix: address review findings`).
 
@@ -267,8 +271,13 @@ Danger), never the ship report:
 
 - **Evidence** — proof the change works, per the repo's `docs/agents/evidence.md`
   (default if missing: level 0 = the red→green test name, 1 = + one real
-  input/output, 2 = + a screenshot or short video). Max 3 proofs; attach media
-  with `gh pr edit <n> --attach <file>`, audio as mp4 (ffmpeg, black frame).
+  input/output, 2 = + a screenshot or short video). Max 3 proofs. Attach media
+  the way that doc says; `gh pr edit --attach` does not exist. Default if the
+  doc is silent: upload to an orphan `evidence-assets` branch via
+  `gh api ... /contents/` and embed the raw URL. Audio as mp4 (ffmpeg, black frame).
+  **The diff touches UI (pages, components) → visual evidence is mandatory**:
+  a browser recording of the changed flow, or a screenshot for a static state.
+  Cannot produce it → it is `blocking`: say why and ask, never ship without it silently.
 - **Merge Danger** — door and blast radius, plus every finding left open (the
   `fix-rules.md` exceptions and anything unresolved after round 2), each with
   file:line and a concrete fix plan.
