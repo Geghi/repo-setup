@@ -1,6 +1,6 @@
 # repo-setup
 
-- Every change here is versioned: add a `## vN — YYYY-MM-DD` entry on top of `CHANGELOG.md` saying what changed and how a set-up repo catches up:
+- Every change here is versioned: add `## vN — YYYY-MM-DD — <one-line summary>` on top of `CHANGELOG.md`, and `changelog/vN.md` saying what changed and how a set-up repo catches up:
   - a verbatim file changed (`templates/skills/*`) → "copy X over Y";
   - a template changed → what changed and why, so the repo's filled copy can be adapted where it makes sense for that repo (never "re-copy the template");
   - a new template → "fill X into Y, as in `references/0N-*.md`".

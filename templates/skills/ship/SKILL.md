@@ -15,8 +15,8 @@ Repo config lives in `.agents/ship.md` and the agents under `.claude/agents/ship
 **Version check, first.** The source is `~/virtual_desktop/projects/shared-agents/repo-setup/`.
 Its version is the top `## vN` heading of its `CHANGELOG.md`; this repo's is the number in `.agents/repo-setup-version` (missing = none).
 
-- This repo is behind → say "repo-setup vN, this repo has vM / none", list the changelog entries in between, and ask to update.
-  Yes → apply each entry: copy what it says to copy; for a changed template, propose the edit to this repo's filled copy only where it fits, show it, and apply what the user accepts. Then write `N` to `.agents/repo-setup-version`, commit it alone (`chore: update repo-setup to vN`), continue.
+- This repo is behind → say "repo-setup vN, this repo has vM / none", list the `CHANGELOG.md` lines in between, and ask to update.
+  Yes → read `changelog/vK.md` for each missing version, oldest first, and apply it: copy what it says to copy; for a changed template, propose the edit to this repo's filled copy only where it fits, show it, and apply what the user accepts. Then write `N` to `.agents/repo-setup-version`, commit it alone (`chore: update repo-setup to vN`), continue.
   No → continue with what's there.
 - Source folder missing (another machine) → skip silently.
 

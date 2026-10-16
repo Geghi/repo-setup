@@ -46,5 +46,4 @@ can say "run only the docs phase".
 - All generated docs are English; keep the TDD rule block in Italian (it is
   quoted verbatim from the template).
 - Never commit in the target repo unless asked; list the created files instead.
-- Every change to this repo adds a `## vN — YYYY-MM-DD` entry on top of
-  `CHANGELOG.md`: what changed and what a set-up repo must do to catch up.
+- Every change to this repo is a new version: see this repo's `CLAUDE.md`.
