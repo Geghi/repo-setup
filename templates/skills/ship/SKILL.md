@@ -2,7 +2,7 @@
 name: ship
 description: Branch, commit, multi-agent parallel code review, fix, lint/typecheck, docs update, push and PR — a repo-agnostic shipping gate. Use when the user says "ship this", "ship it", "review and ship", "manda in review", or invokes /ship.
 user-invocable: true
-version: 4
+version: 8
 ---
 
 # ship
@@ -231,6 +231,14 @@ Then re-run step 3 **in full, every reviewer, fresh**: a fix in one file can
 introduce a problem only another reviewer would catch. Max 2 fix rounds;
 whatever is still open after round 2 goes to Merge Danger.
 
+Hand every round-2 reviewer a **decided in round 1** list in its prompt, one line
+per round-1 finding: `file:line — what was decided — why` (fixed this way, kept
+on purpose, or sent to Merge Danger). Tell them these are **settled**: they may
+flag a regression the fix introduced, or a decision whose stated reason does not
+hold in the code, but not re-argue the choice itself (e.g. round 1 raised a cap
+to 4000, so round 2 does not ask to lower it again). A round-2 row that only
+reverses a settled decision is dropped from the fixes and logged in one line.
+
 ## 5 — Lint, typecheck, test
 
 Commands from `ship.md`, in order, **after** the fixes — fixes break things too.
@@ -247,6 +255,55 @@ don't burn fix rounds on it.
 - **Baseline check via stash: always named** (never bare `git stash`/`pop` —
   parallel agents collide): `git stash push -u -m "<name>"` … `git stash pop
 "stash^{/<name>}"`.
+
+## 5b — Verify
+
+Reviewers *read* the diff; verifiers *run* the app and use it like a user.
+They catch what only shows at runtime: a page that crashes on real data, a
+button wired to nothing, a broken layout, a regression in a flow next door.
+
+**Skip** when the diff has no runtime effect (docs, comments, tests only) —
+say so in one line in the report.
+
+**The recipe — `.agents/verify.md`.** How to run *this* app: install, start
+command, port (and how to override it), env/seed data, test login, how to
+drive it (`chrome-devtools-axi` for web UIs, the CLI or `curl` for APIs/tools),
+how to stop it. Missing → write it now from `package.json` / `Makefile` /
+README, prove it by starting the app once, and commit it alone
+(`chore(ship): add verify recipe`). The diff changed how the app starts or is
+reached (scripts, env vars, ports, routes, auth) → update the recipe in the
+same way. That is what keeps it maintained: every ship touches it when it
+drifts.
+
+**Count:** `verifiers` from `ship.md` (default 1). The user can override per run
+("ship with 3 verifiers"). Launch them **in a single message**, read-only on
+code, each with:
+
+- the recipe path, the intent, the changed-file list, `git diff <base>...HEAD`
+- **its own port** (base port + its index) so parallel servers don't collide
+- **its own angle** (with N > 1, split these; with 1, cover the first two):
+  1. the changed flow, happy path, end to end
+  2. edge inputs on that flow: empty, very long, wrong type, double submit,
+     back button, reload mid-flow
+  3. adjacent flows that share the changed code (find them via the callers of
+     what the diff touches) — regressions
+  4. the same flows on a phone-width viewport and with a slow network (web only)
+- the same TOON table and plain-language rule as the reviewers, `review_scope`
+  always `source`; each row's `why` states the exact steps that reproduce it
+- an instruction to save a screenshot or short recording of what it checked
+  into `$(git rev-parse --git-dir)/ship-evidence/` (inside `.git`, so never
+  committed, one per worktree) and list the paths at the end — step 7
+  reuses them as Evidence
+- an instruction to stop every process it started before returning
+
+Can't start the app at all (missing secret, external service down) → one
+`blocking` row, `needs_user: yes`, saying what is missing. Never mark the run
+as verified without having run it.
+
+**Fix** the findings exactly as in step 4 (same rules, same Never fix list,
+you are the only editor), commit (`fix: address verify findings`), re-run
+step 5, then re-run the verifiers **whose angle produced a finding**. Max 2
+rounds; anything still open goes to Merge Danger with its reproduce steps.
 
 ## 6 — Docs
 
@@ -271,10 +328,11 @@ Danger), never the ship report:
 
 - **Evidence** — proof the change works, per the repo's `docs/agents/evidence.md`
   (default if missing: level 0 = the red→green test name, 1 = + one real
-  input/output, 2 = + a screenshot or short video). Max 3 proofs. Attach media
-  the way that doc says; `gh pr edit --attach` does not exist. Default if the
-  doc is silent: upload to an orphan `evidence-assets` branch via
-  `gh api ... /contents/` and embed the raw URL. Audio as mp4 (ffmpeg, black frame).
+  input/output, 2 = + a screenshot or short video). Max 3 proofs. Prefer the
+  captures the verifiers saved in `$(git rev-parse --git-dir)/ship-evidence/`. Attach media
+  the way that doc says. Default if the doc is silent:
+  `gh pr edit <n> --attach './file.png#alt'` (gh >= 2.101; images/video, up to 50).
+  Audio as mp4 (ffmpeg, black frame).
   **The diff touches UI (pages, components) → visual evidence is mandatory**:
   a browser recording of the changed flow, or a screenshot for a static state.
   Cannot produce it → it is `blocking`: say why and ask, never ship without it silently.
@@ -300,6 +358,7 @@ the user must decide.
 
 **Intent:** <what the user set out to do>
 **Reviewers:** <names> · **Found:** <N blocking, N warnings, N nits> · **Fixed:** <N> · **Open:** <N>
+**Verify:** <N verifiers, angles · N found · N fixed — or "skipped: <why>">
 
 ### 🔴 Needs you
 

@@ -54,6 +54,15 @@ tenant"), never implementation-focused ("calls update with eq").
 8. Flakiness is a bug: no sleep-based waits, no retry-until-green locally. If a test needs retries to pass, fix it.
 9. **Baseline check via stash: always named.** Never bare `git stash`/`pop` (parallel agents collide). `git stash push -u -m "<name>"` … `git stash pop "stash^{/<name>}"`.
 
+## Parallel worktrees
+
+Several agents run tests at the same time in different worktrees: a run never shares mutable state with another run.
+
+- One test database per worktree, named from the worktree path, created and migrated on demand; never a fixed name.
+- One dev-server port per worktree for e2e; never a fixed port.
+- Integration tests run inside a transaction rolled back at the end (or on unique data when the code under test commits).
+- E2E tests create uniquely named data and assert only on it, never on global counts or empty states.
+
 ## Adding a test — quick checklist
 
 1. Pick the layer (rule above). 2. Copy the closest existing test in that folder

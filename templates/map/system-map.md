@@ -28,13 +28,13 @@ Product language and file/type names often disagree. State both once in the cata
 
 Propose before writing. Prefer a `map/` shelf next to existing orientation (`developer-docs/`, `docs/`, vault root) so the subject’s entry file can add one routing row. Do not drop a map inside `src/` or scatter cards through the tree you are mapping.
 
-Entry files: edit `CLAUDE.md`. Generate `AGENTS.md` and `routing.md` as byte-identical twins in the same folder. Never hand-edit the twins. Tools that ignore `CLAUDE.md` still get the catalog.
+Entry files: edit `CLAUDE.md`. `AGENTS.md` and `routing.md` in the same folder are symlinks to it, never copies; an architecture test asserts it. Tools that ignore `CLAUDE.md` still get the catalog.
 
 ## Target tree (smallest that carries the work)
 
 ```
 map/
-├─ CLAUDE.md              L0 catalog (twins: AGENTS.md, routing.md)
+├─ CLAUDE.md              L0 catalog (symlinked as AGENTS.md, routing.md)
 ├─ CONTEXT.md             how to walk; the universes; name collisions
 ├─ _meta/schema.md        closed node types
 ├─ _templates/            object.md, process.md
@@ -66,7 +66,7 @@ One card per type, copied from `_templates/object.md`. Cluster by how an editor 
 
 **Source of truth**
 
-- Code: the type / table / module. Cite `path:line`. If a comment and the code disagree, the code wins and the card says so.
+- Code: the type / table / module. Cite `path::symbol` (a def, class or assignment, dotted for members; config key, Markdown heading); `path:line` only where no name exists, never in source code. If a comment and the code disagree, the code wins and the card says so.
 - Markdown / mixed: the file that owns the fact. Cite path. If two notes disagree, pick one home and link.
 
 `status: verified` only with a date, a branch or commit (or vault revision), and citations. `stale` is allowed. A confident wrong date is not.
@@ -117,6 +117,7 @@ If a step fails, split or move files. Do not add a “how to read this map” no
 - Mapping FeatureRequests / aspiration as live. Ghost it.
 - Copying as-built behaviour into cards. Point at the file that owns it.
 - Empty process/effects folders.
-- Two hand-edited entry files (`CLAUDE.md` and `AGENTS.md` that drift).
+- Two hand-edited entry files (`CLAUDE.md` and an `AGENTS.md` copy that drifts) instead of a symlink.
+- Rewriting card prose for a change that only added or renamed symbols: update the citations only.
 - Cards with no citations marked `verified`.
 - Slurping the whole `objects/` folder in a later session — the catalog exists so you do not.

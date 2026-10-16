@@ -16,6 +16,7 @@ codebases, a "System map" for agents (Van Clief's icm-architect form).
   shape, API contract, auth pattern) — and confirm with the user. Existing repo:
   move code-writing rules out of `CLAUDE.md` into it, leave a pointer. New repo
   with nothing to infer: one placeholder-free section or none; it grows lazily.
+- Prose docs (`CONTEXT.md`, `CODING_STANDARDS.md`, `docs/agents/`) are one short sentence per line, so parallel branches rebase without conflicts.
 - Copy format guides into `docs/agents/`:
   - `templates/adr/ADR-FORMAT.md` → `docs/agents/adr-format.md`
   - `templates/adr/CONTEXT-FORMAT.md` → `docs/agents/context-format.md`
@@ -39,8 +40,19 @@ exist. For an existing codebase:
    proposed clusters, get explicit approval before writing anything.
 2. Card templates: copy `templates/map/_templates/` into the target `map/_templates/`.
 3. Respect its budgets (entry 300–800 tokens, CONTEXT 200–500, cards cite
-   `path:line`, never copy code; dead/aspirational code marked `ghost`).
+   `path::symbol` (never a line number where a symbol exists), never copy code; dead/aspirational code marked `ghost`).
 4. It is fine to stop after slice 1–2 (structure + object stubs) and leave
    remaining cards as incremental work — say so in the closing summary.
-5. Fill the map placeholders from section 2 (the map itself lives in
+5. Add an architecture test that fails on a citation whose file is gone or
+   whose symbol is no longer defined (reference:
+   `prospector/backend/tests/architecture/test_map_citations.py`).
+6. `map/AGENTS.md` and `map/routing.md` are symlinks to `map/CLAUDE.md`, never `cp` copies: `ln -s CLAUDE.md map/AGENTS.md && ln -s CLAUDE.md map/routing.md`.
+   A copy drifts the first time someone edits `CLAUDE.md` and forgets the twins.
+   Add an architecture test that fails unless both are symlinks resolving to `map/CLAUDE.md`.
+7. Map updates are proportional to the change.
+   A change that only adds or renames symbols updates the `path::symbol` citations and nothing else.
+   Prose (why, Hits / Does not hit, steps) is rewritten only when behaviour changes.
+   Write this rule into `map/CLAUDE.md` and the ship docs engineer.
+8. Cards and map entry files are one sentence per line, like every prose doc.
+9. Fill the map placeholders from section 2 (the map itself lives in
    `map/CLAUDE.md`).

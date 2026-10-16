@@ -19,7 +19,7 @@ produces: []
 
 ## Steps
 
-1. {Cite `{path}:{line}`.}
+1. {Cite `{path}::{symbol}`.}
 
 ## If you change this
 

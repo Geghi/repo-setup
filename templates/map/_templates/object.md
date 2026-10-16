@@ -18,7 +18,7 @@ entity: {path to the owning file}
 
 - {keys, constraints, or owning files}
 
-Citations: `{path}:{line}`
+Citations: `{path}::{symbol}`
 
 ## Connected to
 

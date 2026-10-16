@@ -78,6 +78,14 @@ Folder tree:
   automatically (e2e, golden, anything needing live endpoints or paid APIs) and
   why. This is the most expensive thing to get wrong.}}
 
+## Verify
+
+- Recipe: `.agents/verify.md` (how to start, reach and stop the app — written
+  and kept current by `/ship` step 5b).
+- `verifiers: {{1}}` — {{raise for risky surfaces, e.g. 3 for checkout/auth}}.
+- {{Anything verifiers must never do: hit production, send real emails/SMS,
+  charge cards. Delete if none.}}
+
 ## Docs
 
 Single agent, `docs-engineer` — the **only** one with write access. Its full brief

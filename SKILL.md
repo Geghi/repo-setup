@@ -38,6 +38,9 @@ can say "run only the docs phase".
 
 - Templates live in `templates/` next to this file. Copy with `cp`, then fill
   the `{{PLACEHOLDERS}}`. Never leave a placeholder unfilled in the target repo.
+- Prose docs (`CONTEXT.md`, map cards, `docs/agents/`, `CODING_STANDARDS.md`) are written one short sentence per line.
+  Parallel branches then touch different lines and rebase without conflicts.
+  Apply it to every file you generate or reshape, templates included.
 - All generated docs are English; keep the TDD rule block in Italian (it is
   quoted verbatim from the template).
 - Never commit in the target repo unless asked; list the created files instead.

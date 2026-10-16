@@ -45,3 +45,36 @@ version: igea-livekit-agent's `docs/agents/evidence.md`.
   `testing` skill (single source of truth, don't duplicate).
 - Ensure the test commands land in CLAUDE.md's Commands section and, if the
   ship phase ran, in `.agents/ship.md`'s Commands section.
+
+## 6. Guardrail hooks (pre-commit)
+
+The repo's gate runs from pre-commit.
+Two rules apply to every repo set up here:
+
+- **complexipy reports failures only.**
+  Run it as `complexipy -f` (`--failed`) in the pre-commit hook, in CLAUDE.md's Commands and in `.agents/ship.md`.
+  Without `-f` it prints every function and the one that failed is lost in the output.
+- **Deps follow the lockfile.**
+  A rebased or freshly checked-out worktree with stale `node_modules` or `.venv` fails the gate for no code reason.
+  Copy `templates/scripts/sync-deps.sh` → `scripts/sync-deps.sh` and keep one `sync <lockfile> <install command>` line per lockfile (`npm ci`, `uv sync`, ...).
+  It re-runs the install only when the lockfile's hash differs from the one stamped in this worktree's git dir.
+  Wire it into `.pre-commit-config.yaml`:
+
+  ```yaml
+  default_install_hook_types: [pre-commit, post-checkout, post-rewrite]
+  default_stages: [pre-commit]
+  repos:
+    - repo: local
+      hooks:
+        - id: sync-deps
+          name: re-install deps when a lockfile changed
+          entry: scripts/sync-deps.sh
+          language: system
+          pass_filenames: false
+          always_run: true
+          stages: [post-checkout, post-rewrite]
+  ```
+
+  `default_stages` keeps the gate hooks off checkout and rebase.
+  Re-run `pre-commit install` once so the two new hook types are installed.
+  Check: change the lockfile on a branch, `git checkout` it, the install runs; check out again with no lockfile change, it does not.
