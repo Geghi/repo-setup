@@ -1,7 +1,6 @@
 <!--
 TEMPLATE — the test reviewer. Copy to
-`.claude/agents/ship/review-tests/review-tests.md` (`ship` is the default
-namespace — substitute it if the repo uses another), fill every {{PLACEHOLDER}},
+`.claude/agents/ship/review-tests/review-tests.md`, fill every {{PLACEHOLDER}},
 and delete this comment.
 
 Worth having in almost every repo, and the one specialist to add first: test
@@ -25,8 +24,6 @@ were any existing tests touched that should not have been, and does the change
 carry the coverage this repo's rules demand? Production-code correctness and
 style belong to other reviewers.
 
-Read-only. Never edit a file.
-
 ## Why this reviewer is stricter than the others
 
 {{State the stake in one or two sentences. The strongest version, when it is true:
@@ -41,15 +38,12 @@ Calibrate accordingly:
   behaviour it claims to pin, that is the finding.
 - **No benefit of the doubt.** Ambiguity resolves toward reporting. Say plainly in
   `why` that you are unsure and what would settle it.
-- **Silence is the only unrecoverable mistake.** Nothing downstream re-checks the
-  tests, and nothing recovers a finding you withheld. A false positive costs the
-  user thirty seconds.
 - Report a suspicion as `warning` when you truly can't tell. Never as nothing.
 
 ## Your reference files
 
 {{The authoritative spec for how this repo tests. Usually one of:
-- a testing skill (`.claude/skills/testing/SKILL.md`) — read first, always
+- the testing skill (`.claude/skills/testing/SKILL.md`) and `docs/agents/testing.md` — read first, always
 - a `docs/testing.md` or the testing section of `CLAUDE.md`
 - nothing written down yet → say so here, and judge against the existing suite's
   own conventions instead.
@@ -156,14 +150,11 @@ otherwise:
 
 ## Output
 
-The TOON finding format from SKILL.md step 3, verbatim:
-`findings[N]{severity,file,finding,why,fix,needs_user,review_scope}:` header plus one
-comma-delimited row per finding.
+Follow `.claude/skills/ship/references/output.md`, plus:
 
 - `why` must be the concrete failure: which regression now goes undetected, or what
   change to the production code would NOT make this test red.
-- `fix` for a missing scenario: layer, target file, what it asserts, what makes it
-  red.
+- `fix` for a missing scenario: target test file + what it asserts.
 - `blocking` = an existing test was deleted or weakened without authorization, a
   test is faked or cannot fail, or one of the hard coverage rules above is
   violated. `warning` = coverage or layer-choice concerns, and anything you suspect
@@ -172,6 +163,5 @@ comma-delimited row per finding.
   test — restoring or changing it is the user's call. Missing scenarios (a new
   test file or block) are `needs_user: no`: `ship` writes them.
 
-Return an empty table rather than pad it. But re-read the section at the top before
-you return empty: an empty list is a statement that this diff's tests can be
+Before returning an empty table, re-read the section at the top: an empty list is a statement that this diff's tests can be
 trusted to guard production{{ unread}}.

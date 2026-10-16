@@ -1,32 +1,10 @@
-# Default reviewer: review-general (thermo-nuclear)
-
-Bundled with the `ship` skill itself — not copied into any repo, not listed in
-`ship.md`. It runs on **every** `/ship`, in every repo, alongside whatever
-specialists that repo's `ship.md` adds. It is the one reviewer a repo never has
-to set up.
+# Bundled reviewer: review-general (thermo-nuclear)
 
 Adapted from `thermo-nuclear-code-quality-review`
-(`cursor/plugins`, `cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md`)
-— an extremely strict maintainability/structure reviewer. The review
-philosophy below is that skill's content essentially verbatim; the only
-addition is `ship`'s TOON output contract and severity/needs_user/review_scope
-mapping so its findings slot into the same pipeline as every other reviewer.
+(`cursor/plugins`, `cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md`),
+an extremely strict maintainability and structure reviewer, kept essentially verbatim.
 
-A previous, more conservative generalist (correctness/risk-focused, low-noise)
-is kept at `review-general.md.bak` for reference.
-
-## When to launch it
-
-Every `/ship` run, unconditionally, in the same parallel batch as the
-`ship.md` reviewers (SKILL.md step 3). Launch it with `subagent_type:
-general-purpose` (or `code-reviewer` if present) — it has no persisted agent
-file in the repo, so pass the instructions below as its prompt verbatim, plus
-the same base branch, diff command, intent, and changed-file list every other
-reviewer gets.
-
-## Instructions (the agent's prompt)
-
----
+## Instructions
 
 Perform a deep code quality audit of the current branch's changes.
 Rethink how to structure / implement the changes to meaningfully improve code
@@ -222,32 +200,9 @@ clearly:
 If those conditions are not met, leave explicit, actionable feedback and push
 for a cleaner decomposition.
 
-## Output — ship's TOON contract
+## Output
 
-Everything above is the review philosophy; this section is the only part
-adapting it to `ship`. Same contract as every other `ship` reviewer —
-**TOON**, not repeated `key: value` blocks, return nothing else:
+Follow `.claude/skills/ship/references/output.md`.
 
-```
-findings[N]{severity,file,finding,why,fix,needs_user,review_scope}:
-  blocking,src/foo.py:42,<one sentence: what is wrong>,<the concrete failure — which input or state produces which bad outcome>,<what should change>,no,source
-```
-
-One header line, one row per finding, comma-delimited; quote a field (double
-quotes, doubled inner quotes) if it contains a comma or newline rather than
-rewriting the prose to dodge it. `N` must match the row count — zero findings
-is a header with no rows, not an omitted line.
-
-**Severity** — map the approval-bar presumptive blockers above to `blocking`;
-a real but non-blocking maintainability issue to `warning`; a cosmetic /
-low-conviction note to `nit`. Exactly `blocking`/`warning`/`nit`, no other
-values.
-
-**needs_user** — `yes` only when the fix is a product decision (changes how an
-already-shipped flow behaves for the user, questions the intent) or needs
-something only the user has (a secret, a choice between two valid approaches).
-Structural recommendations are still `no`: `ship` fixes them.
-
-Return an empty table rather than padding it. Report an uncertain finding
-rather than staying silent — nothing downstream filters `source` or
-`external-delivery` findings, and nothing recovers one you withheld.
+The approval-bar blockers above → `blocking`; a real but non-blocking maintainability issue → `warning`; cosmetic or low-conviction → `nit`.
+Structural recommendations are `needs_user: no`: `ship` fixes them.

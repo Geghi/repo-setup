@@ -1,24 +1,23 @@
 ---
 name: testing
-description: How to add and run tests in {{REPO_NAME}} across its layers ({{LAYER_SUMMARY}}), including TDD workflow, layer selection, folder structure, and non-negotiable rules. Use when writing new tests, adding coverage for a feature or bug fix, doing TDD, or deciding which layer a test belongs in.
+description: How to add and run tests in this repo across its layers, including TDD workflow, layer selection, and non-negotiable rules. Use when writing new tests, adding coverage for a feature or bug fix, doing TDD, or deciding which layer a test belongs in.
 ---
 
-# Testing in {{REPO_NAME}}
+# Testing
+
+This repo's commands, layers, needs and folder structure: `docs/agents/testing.md`. Read it first.
 
 ## The layers — pick the LOWEST one that can catch the failure
 
 Trophy shape, not pyramid: fat integration middle, thin E2E top.
 
-| Layer       | Command                      | Needs                          | Use for                                      |
-| ----------- | ---------------------------- | ------------------------------ | -------------------------------------------- |
-| Unit        | `{{UNIT_CMD}}`               | nothing                        | pure logic: parsers, mappers, calculations   |
-| Integration | `{{INTEGRATION_CMD}}`        | {{INTEGRATION_NEEDS}}          | code against real dependencies (DB, queues)  |
-| E2E         | `{{E2E_CMD}}`                | {{E2E_NEEDS}}                  | user journeys through the real UI            |
+- **Unit**: pure logic (parsers, mappers, calculations).
+- **Integration**: code against real dependencies (DB, queues).
+- **E2E**: user journeys through the real UI.
 
 Decision rule: **does it involve DB/state? → integration. Does it require a
 browser (or the full app) to fail? → E2E. Otherwise → unit.**
-
-{{EXTRA_LAYERS_SECTION}}
+Extra layers (e.g. pgTAP) and when to use them: `docs/agents/testing.md`.
 
 ## TDD workflow
 
@@ -27,13 +26,9 @@ first, write the failing test, watch it fail **for the right reason**, write
 minimal code, refactor with the test green. Bug fixes ALWAYS start with a
 failing regression test reproducing the bug.
 
-## Folder structure
+## Naming
 
-```
-{{TEST_TREE}}
-```
-
-Naming: behavior-focused test names ("an owner cannot write into another
+Behavior-focused test names ("an owner cannot write into another
 tenant"), never implementation-focused ("calls update with eq").
 
 ## Non-negotiable rules
@@ -47,7 +42,7 @@ tenant"), never implementation-focused ("calls update with eq").
    - Every new test must be seen failing at least once (TDD red, or temporarily break the code/assertion) — a test never seen red proves nothing.
    - If you can't make a test pass honestly, STOP and tell the user the truth: report the failing behavior. A red test reported honestly is worth infinitely more than a green lie.
 3. **Never skip tests to get a green run.** A skipped test is a hidden regression.
-4. **Isolation by unique data, never by cleanup**: every integration/E2E test file provisions its own isolated data (unique IDs){{TENANCY_NOTE}}. No truncate, no reset between tests, no shared fixtures across files. Two consecutive runs must both pass.
+4. **Isolation by unique data, never by cleanup**: every integration/E2E test file provisions its own isolated data (unique IDs; per-tenant scoping, if any, in `docs/agents/testing.md`). No truncate, no reset between tests, no shared fixtures across files. Two consecutive runs must both pass.
 5. **Local stack only**: never point tests at hosted/production services. Never read `.env.local`.
 6. **No PII in fixtures/assertions** beyond generated fake data.
 7. **Every new feature or bug fix ships with tests** at the appropriate layer.

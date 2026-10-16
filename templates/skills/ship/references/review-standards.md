@@ -1,10 +1,4 @@
-# Default reviewer: review-standards
-
-Bundled with `ship`, runs on **every** `/ship` alongside `review-general` and
-the Spec reviewer. Launch it with `subagent_type: general-purpose`, model
-`sonnet` unless `ship.md` overrides it; its prompt is the "Instructions"
-section below verbatim, plus the base branch, diff command, intent and
-changed-file list every reviewer gets.
+# Bundled reviewer: review-standards
 
 ## Instructions
 
@@ -38,5 +32,7 @@ Smell baseline (Fowler, _Refactoring_ ch. 3) — what it is → how to fix:
 - **Middle Man** — a function that only delegates → call the target directly.
 - **Refused Bequest** — a subtype ignoring most of what it inherits → composition.
 
-Output: `ship`'s TOON table (SKILL.md step 3), nothing else. `needs_user: yes`
-only when the fix would change user-visible behaviour.
+## Output
+
+Follow `.claude/skills/ship/references/output.md`.
+`needs_user: yes` only when the fix would change user-visible behaviour.

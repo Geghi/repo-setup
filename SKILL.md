@@ -31,7 +31,9 @@ can say "run only the docs phase".
    Also copy `templates/AGENTS.md` if the repo has no `AGENTS.md`.
 6. **Always** copy `templates/skills/{retro,writing-for-agents}/` → `.claude/skills/`
    (not tied to a phase).
-7. **Close with a summary**: what was created/changed, what remains manual
+7. **Stamp the version**: write the top `## vN` number of `CHANGELOG.md` to
+   `.agents/repo-setup-version` in the target repo. `/ship` reads it to offer updates.
+8. **Close with a summary**: what was created/changed, what remains manual
    (e.g. `multica login`, plugin install, creating the GitHub repo/remote).
 
 ## Conventions
@@ -44,3 +46,5 @@ can say "run only the docs phase".
 - All generated docs are English; keep the TDD rule block in Italian (it is
   quoted verbatim from the template).
 - Never commit in the target repo unless asked; list the created files instead.
+- Every change to this repo adds a `## vN — YYYY-MM-DD` entry on top of
+  `CHANGELOG.md`: what changed and what a set-up repo must do to catch up.

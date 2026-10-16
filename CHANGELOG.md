@@ -1,0 +1,25 @@
+# Changelog
+
+The top `## vN` heading is the current repo-setup version.
+Each entry says what changed and what a set-up repo must do to catch up: copy for verbatim files, what changed and why for filled templates (adapted only where it fits the repo), fill for new ones.
+`/ship` lists the entries a repo is missing and applies them on request.
+
+## v2 — 2026-10-16
+
+- Versioning moves from the ship skill to the whole repo-setup: this changelog, plus `.agents/repo-setup-version` in each set-up repo.
+- ship slimmed: `SKILL.md` only orchestrates; one output contract in `references/output.md`; spec reviewer and verify step moved to `references/`; the guided setup and the agent templates moved out of the skill into repo-setup (`references/01-ship.md`, `templates/ship/`); `review_scope` column and legacy `.claude/ship.md` migration removed.
+- `.agents/ship.md` keeps only per-repo facts: `Root`, git default branch, namespace, folder tree, and the push/PR lines are gone.
+- Verify: the skill keeps only the flow; how to run, drive, angles, evidence and limits live in each repo's `.agents/verify.md`, from `templates/ship/verify.md`.
+- Bundled agents (review-general, review-standards, review-spec, new `verifier`) run on `opus`, effort `medium`, overridable in `ship.md`.
+- Setup proposes extra gates from `references/gate-tools.md` (Lighthouse, pgTAP, ZAP, semgrep, …); picked ones go in `ship.md` Commands or `verify.md` Gates.
+- ship step 4: round 2 re-runs only the reviewers that had findings, plus `review-general`, on the fix commits only.
+- ship step 5: extra gates fail like lint (fixed, max 3 rounds); a step-5 fix that changes behaviour gets one `review-general` pass.
+- testing: the skill is generic now; this repo's layers, commands, folders and isolation move to `docs/agents/testing.md` (new template `templates/docs/agents/testing.md`).
+- ship step 5: one command per tool, run in parallel (`serial` ones after), full output to `.git/ship-check/<name>.log` (emptied each run, like `ship-evidence/`), exit code decides; a command can be limited with `only if the diff touches <paths>` (e.g. e2e on frontend changes).
+- docs-engineer template: map check is the architecture test, citations by symbol (no line numbers), terse report.
+- Catch up: copy `templates/skills/ship/` over `.claude/skills/ship/`. In `.agents/ship.md`, delete `Root`, the git-default line, the namespace and folder-tree lines, the generic push/PR and docs-agent prose, and move the Verify "never do" line into `.agents/verify.md` under `## Never`. Delete its Docs section (the docs-engineer's own table owns the writable paths). In the docs-engineer, replace the map bash check with the map's architecture test command and drop the "moves lines" row. In review-tests, `fix` for a missing scenario becomes "target test file + what it asserts". In `.agents/ship.md` Commands, add e2e as `serial, only if the diff touches <frontend paths>` if it runs on a local stack with its own DB; mark `serial` the commands sharing a DB or fixed port, and check each exits non-zero on failure. Optionally offer the extra gates from repo-setup's `references/gate-tools.md`. In each repo reviewer, point its Output section at `.claude/skills/ship/references/output.md`. Testing: move the repo-specific parts of `.claude/skills/testing/SKILL.md` (commands, needs, extra layers, folder tree, isolation note) into a new `docs/agents/testing.md` filled from `templates/docs/agents/testing.md`, then copy `templates/skills/testing/` over the skill. In review-tests, its reference list names `docs/agents/testing.md` too. In `CLAUDE.md`'s where-to-find table, add the `docs/agents/testing.md` row. No `.agents/verify.md` yet → write it as in repo-setup's `references/01-ship.md` "verify.md".
+
+## v1 — 2026-10-16
+
+- Baseline: the setup as of commit `8925a01`, before versioning.
+- Catch up: nothing.

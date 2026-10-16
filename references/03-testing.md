@@ -1,8 +1,8 @@
 # Phase 3 — Testing & TDD
 
 Goal: the repo has (a) the non-negotiable TDD rule in CLAUDE.md, (b) a `tdd`
-skill for the red-green-refactor loop, (c) a repo-specific `testing` skill that
-is the single source of truth for layers, commands and rules.
+skill for the red-green-refactor loop, (c) the generic `testing` skill (rules)
+plus `docs/agents/testing.md` (this repo's layers, commands, folders).
 
 ## 1. Discover the stack
 
@@ -21,12 +21,9 @@ CI). Then confirm with the user:
 
 - **tdd**: copy `templates/skills/tdd/` and `templates/skills/codebase-design/`
   (tdd calls it) → `.claude/skills/`. Generic, no placeholders.
-- **testing**: copy `templates/skills/testing/SKILL.md` →
-  `.claude/skills/testing/SKILL.md` and fill every `{{PLACEHOLDER}}` with the
-  answers from step 1. The non-negotiable rules section is copied verbatim —
-  never weaken it. For stacks with extra layers (e.g. pgTAP), add a row and a
-  short section; use igea-saas' testing skill as the reference example of a
-  fully filled version.
+- **testing**: copy `templates/skills/testing/` → `.claude/skills/testing/`. Generic, no placeholders.
+  Then copy `templates/docs/agents/testing.md` → `docs/agents/testing.md` and fill it with the answers from step 1.
+  For stacks with extra layers (e.g. pgTAP), add a row and its one-line use.
 
 ## 3. CLAUDE.md
 
@@ -42,7 +39,7 @@ version: igea-livekit-agent's `docs/agents/evidence.md`.
 ## 5. Wire-up
 
 - If a `tests/` folder exists, add a 3-line `tests/AGENTS.md` pointing at the
-  `testing` skill (single source of truth, don't duplicate).
+  `testing` skill and `docs/agents/testing.md` (don't duplicate).
 - Ensure the test commands land in CLAUDE.md's Commands section and, if the
   ship phase ran, in `.agents/ship.md`'s Commands section.
 

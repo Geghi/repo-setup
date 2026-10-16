@@ -21,7 +21,8 @@
 | why a choice was made      | [docs/adr/](docs/adr/)                                |
 | how code must be written   | [CODING_STANDARDS.md](CODING_STANDARDS.md)            |
 | how to work here           | [docs/agents/workflow.md](docs/agents/workflow.md)    |
-| tests: layer, how to run   | `testing` skill                                       |
+| tests: rules, layer choice | `testing` skill                                       |
+| tests: commands, folders   | [docs/agents/testing.md](docs/agents/testing.md)      |
 | PR proof                   | [docs/agents/evidence.md](docs/agents/evidence.md)    |
 | issues / triage            | [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md), [triage-labels.md](docs/agents/triage-labels.md) |
 {{MAP_ROW — only with a map: "| what a noun is / what a change hits | [map/CLAUDE.md](map/CLAUDE.md) |"}}

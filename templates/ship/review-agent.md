@@ -1,7 +1,6 @@
 <!--
 TEMPLATE — a repo specialist reviewer. Copy to
-`.claude/agents/ship/review-<name>/review-<name>.md` (`ship` is the default
-namespace — substitute it if the repo uses another), fill every
+`.claude/agents/ship/review-<name>/review-<name>.md`, fill every
 {{PLACEHOLDER}}, and delete this comment.
 
 One per recurring risk the repo has ACTUALLY hit. Not one per topic that sounds
@@ -63,10 +62,4 @@ the same false positive coming back every run.}}
 
 ## Output
 
-The TOON finding format from SKILL.md step 3, verbatim:
-`findings[N]{severity,file,finding,why,fix,needs_user,review_scope}:` header plus one
-comma-delimited row per finding, not repeated `key: value` blocks.
-
-Return an empty table rather than pad it. Report an uncertain finding rather than
-staying silent — nothing downstream filters findings, and nothing recovers one you
-withheld.
+Follow `.claude/skills/ship/references/output.md`.
