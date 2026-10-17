@@ -33,7 +33,7 @@ tenant"), never implementation-focused ("calls update with eq").
 
 ## Non-negotiable rules
 
-1. **Never modify, weaken, or delete an existing test without explicitly asking the user first.** Tests are contracts. If your code change makes a test fail, the default assumption is your code is wrong — fix the code. If you believe the _behavior change is intentional_, stop and ask before touching the test.
+1. **Never weaken an existing test to go green.** Tests are contracts: if your change makes one fail, the default assumption is that your code is wrong — fix the code. Updating an existing test is fine only when the behaviour change is intentional (the task asks for it): rewrite the assertion to the new expected behaviour, taken from the task or spec, never from the code's output, and keep the case at least as strict as before. Say in the commit which test changed and why. Deleting or skipping a test, or loosening it without a behaviour change, still needs the user first.
 2. **Never fake a test to make it pass.** This is the cardinal sin, in every form it takes:
    - Never change an assertion to match the code's current (possibly buggy) output just to go green — verify the expected value is _correct_, from the spec or the user, not from what the code happens to return.
    - Never write tautological tests that cannot fail (asserting a mock returns what you told it to, `expect(x).toBeDefined()` on something always defined, copying the implementation into the expectation).

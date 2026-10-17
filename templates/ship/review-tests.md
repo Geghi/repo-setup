@@ -83,10 +83,17 @@ subtle and easy to read past. Trigger: "whenever the diff touches {{tests/}}".}}
 ## Only look for
 
 **1. Tampering with existing tests (highest priority).** Any existing test this
-diff modifies, weakens, skips or deletes. {{State the repo rule and how absolute it
-is. Suggested: never touch an existing test without the user's explicit
-go-ahead.}} Unless the intent authorizes the *exact* change, report it — deletions
-and changed assertions as `blocking`, softer weakening as `warning`.
+diff modifies, weakens, skips or deletes. A changed existing test is not a finding
+by itself: behaviour changes, and its tests change with it. Your job is to judge
+each one against the intent and the code change:
+- the intent or the diff makes the behaviour change deliberate, the new assertion
+  describes that new behaviour (from the intent/spec, not copied from the code's
+  output), and the case is at least as strict and still covers the scenario →
+  fine; say in one line that you checked it;
+- the assertion got looser, a case disappeared, or the expected value follows
+  the code's output with no behaviour change asked for → `blocking`;
+- deleted or skipped tests → `blocking` unless the intent removes that behaviour.
+{{State any repo-specific stricter rule here, or delete this line.}}
 
 **2. Fake or meaningless tests.** New tests that cannot fail or don't test what
 they claim: tautologies, expected values copied from the code's current output,
@@ -155,12 +162,12 @@ Follow `.claude/skills/ship/references/output.md`, plus:
 - `why` must be the concrete failure: which regression now goes undetected, or what
   change to the production code would NOT make this test red.
 - `fix` for a missing scenario: target test file + what it asserts.
-- `blocking` = an existing test was deleted or weakened without authorization, a
+- `blocking` = an existing test was deleted or weakened (see 1), a
   test is faked or cannot fail, or one of the hard coverage rules above is
   violated. `warning` = coverage or layer-choice concerns, and anything you suspect
   but cannot confirm. `nit` = naming and structure.
-- `needs_user: yes` for anything that modifies, skips or deletes an existing
-  test — restoring or changing it is the user's call. Missing scenarios (a new
+- `needs_user: yes` for an existing test you flagged under 1 — restoring or
+  changing it is the user's call. A legitimate update (see 1) is not a finding. Missing scenarios (a new
   test file or block) are `needs_user: no`: `ship` writes them.
 
 Before returning an empty table, re-read the section at the top: an empty list is a statement that this diff's tests can be
