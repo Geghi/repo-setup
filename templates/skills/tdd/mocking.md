@@ -3,7 +3,6 @@
 Mock at **system boundaries** only:
 
 - External APIs (payment, email, etc.)
-- Databases (sometimes - prefer test DB)
 - Time/randomness
 - File system (sometimes)
 
@@ -12,6 +11,13 @@ Don't mock:
 - Your own classes/modules
 - Internal collaborators
 - Anything you control
+
+## Your own data-access layer
+
+Mocking a repository, DAO or DB client you own is mocking the database: the mock answers what you believe the query returns.
+
+- Fine when the subject is pure decision logic and the data is only input.
+- Never as the only proof of a behaviour that depends on what a query, filter or join returns: that test runs against a real test DB.
 
 ## Designing for Mockability
 

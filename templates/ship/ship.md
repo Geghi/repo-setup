@@ -37,8 +37,7 @@ One line per tool; each must exit non-zero on failure. Mark `serial` what can't 
 - Lint: `{{pnpm lint}}` (fix: `{{pnpm lint:fix}}`)
 - Typecheck: `{{pnpm typecheck}}`
 - Test: `{{pnpm test:unit}}`
-- {{Test: `pnpm test:integration` — serial}}
-- {{E2E: `pnpm test:e2e` — serial, only if the diff touches `frontend/**`, `src/app/**`, `packages/api-types/**`. Runs on the local stack with its own DB, never a shared or hosted one.}}
+- {{One `Test:` line per other layer chosen as a gate at setup (integration, e2e, contract, DB, …): command, `serial` if it shares a DB or port, what it needs, `only if the diff touches <paths>` when it applies, and what to report when its stack is down ("not run", never "passed"). E.g. `Test: pnpm test:integration — serial, needs the local Supabase stack; down → report "not run"`. Delete if unit is the only gating layer.}}
 - {{Extra gates picked at setup that need no running app, e.g. `Gate: semgrep --config auto --error`, `Gate: supabase test db — serial`. Delete if none.}}
 - Never run automatically: {{e2e, golden, live endpoints, paid APIs — and why}}
 

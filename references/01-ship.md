@@ -53,6 +53,13 @@ a few at a time, not a wall — and let the user redirect:
   cost them (a silent isolation leak, a DST bug, an unasserted audit row, a
   rounding error). And ask **who reads the shipped code**: if a human reviews every
   PR, soften the template's paranoid calibration; if nobody does, keep it.
+- **Which test layers gate a run?** Unit is almost always there and always gates.
+  Ask which other layers the repo has (integration, e2e, contract, DB/pgTAP,
+  visual, anything else step 1 found) and, for each, whether `/ship` must run it
+  as a gate: what it needs to run (local stack, DB, browser), when it applies
+  (always, or only if the diff touches certain paths), and what happens when its
+  dependency isn't up (blocking, or "not run" in the report — never "passed").
+  A layer left out is written under "Never run automatically" with why.
 - **Extra gates?** Read `references/gate-tools.md`, match it against what step 1 found, and propose the 2–4 that fit best, one line each on what they'd catch here. The user picks; add nothing they didn't.
 - **Model?** Default `opus` for repo reviewers; bundled agents run `opus` at effort `medium`. Propose a cheaper model only for a mechanical, narrow reviewer, and say why.
 - **Areas to leave alone?** Generated code, vendored files, legacy under rewrite.
@@ -102,7 +109,7 @@ only covers what they cannot know.
 
 Run every command once and prove each can fail (a broken test, a planted finding), then restore: a tool that exits 0 on problems hides them from `/ship`.
 Mark `serial` the ones that share a DB or a fixed port.
-E2E runs automatically only on a local stack with its own DB, and only when the diff touches what the user sees: ask which paths count (UI code, plus the API contracts it consumes) and write them as `only if the diff touches <paths>`.
+Every test layer the user chose as a gate gets its own `Test:` line, with what it needs and its `only if the diff touches <paths>` condition when it has one (e.g. e2e only for UI code plus the API contracts it consumes). Layers needing a stack run only on a local one with its own DB.
 Take most care over **Commands** (suites that must never run automatically) and **Delivery** (what happens when something is blocking).
 If the repo already documents its tracker, `ship.md` links that doc and states only the `/ship` policy.
 

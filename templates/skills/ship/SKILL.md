@@ -53,6 +53,7 @@ Launch in a single message, in parallel:
 Every bundled agent (reviewers here, verifiers in step 6) runs on model `opus`, effort `medium`, unless `ship.md` overrides it.
 
 Give each: the base branch and `git diff <base>...HEAD` to run itself (never paste the diff), the intent verbatim, and the changed-file list minus `ship.md`'s ignore patterns (and tell it to skip those paths).
+Nothing else: never the implementer's reasons for a design or test-layer choice ("the query didn't change, so unit is enough"). Reviewers judge those choices themselves.
 Reviewers are read-only.
 
 ## 4 — Fix

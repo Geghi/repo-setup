@@ -101,8 +101,19 @@ mocking the thing under test, swallowed failures, skipped tests, assertion-free
 bodies, assertions on data the test itself just built with no code under test in
 between. All `blocking` — a green lie is worse than no test.
 
-**3. Missing scenarios.** The diff changes behaviour with no test at the
-appropriate layer, or the tests it adds skip what matters.
+**3. Missing scenarios — and better tests.** The diff changes behaviour with no
+test at the appropriate layer, or the tests it adds skip what matters.
+
+Don't stop at "is there a test". For every behaviour the diff changes, name the
+strongest test that could prove it: layer, file, what it asserts, what would make
+it red. If the diff's tests are weaker than that (a mock pre-answers the question
+under test, a fixture opens the path the bug doesn't take, one season only),
+report the stronger test even when coverage looks complete. Judge the layer
+yourself from the code: an implementer's reason for a layer is not evidence.
+
+Always `blocking`, in every repo: **a bug fix whose only regression proof mocks
+the dependency where the bug lives** (the DB, a repository, an adapter) — the mock
+returns what the author believed, which is exactly what was wrong.
 
 {{THE REPO-SPECIFIC PART, and the one worth the most thought. List the coverage
 gaps that are `blocking` here rather than `warning`, each with the reason nothing
@@ -124,9 +135,10 @@ and what would make it red. Never "add more tests".
 
 **4. Wrong layer.** {{The repo's layer-selection rule, in one line per layer.
 Then the specific mistake that matters most here — the one that produces a test
-which passes while testing nothing. A frequent one: a unit test that mocks the DB
-client and asserts a filter was called, which tests the mock and passes with a
-typo'd column name; it belongs at the integration layer.}}
+which passes while testing nothing.}} Any stand-in for a real dependency counts —
+DB client, repository/DAO, gateway, API adapter — not only the raw client: a unit
+test that mocks one and asserts on what it "returned" tests the mock, and belongs
+at the layer that has the real thing.
 
 **5. Broken repo test rules.** {{Conventions whose violation makes the suite
 unreliable rather than merely ugly: shared/global state instead of per-test
@@ -161,14 +173,16 @@ Follow `.claude/skills/ship/references/output.md`, plus:
 
 - `why` must be the concrete failure: which regression now goes undetected, or what
   change to the production code would NOT make this test red.
-- `fix` for a missing scenario: target test file + what it asserts.
+- `fix` for a missing scenario or a better test: target test file + what it asserts.
 - `blocking` = an existing test was deleted or weakened (see 1), a
   test is faked or cannot fail, or one of the hard coverage rules above is
   violated. `warning` = coverage or layer-choice concerns, and anything you suspect
   but cannot confirm. `nit` = naming and structure.
 - `needs_user: yes` for an existing test you flagged under 1 — restoring or
-  changing it is the user's call. A legitimate update (see 1) is not a finding. Missing scenarios (a new
-  test file or block) are `needs_user: no`: `ship` writes them.
+  changing it is the user's call. A legitimate update (see 1) is not a finding. Missing scenarios and better
+  tests that are purely additive (a new test file or block) are `needs_user: no`:
+  `ship` writes them. A better test that needs an existing test changed is
+  `needs_user: yes`: report it, never rewrite it.
 
 Before returning an empty table, re-read the section at the top: an empty list is a statement that this diff's tests can be
 trusted to guard production{{ unread}}.

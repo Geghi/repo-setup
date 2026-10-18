@@ -17,6 +17,20 @@ Trophy shape, not pyramid: fat integration middle, thin E2E top.
 
 Decision rule: **does it involve DB/state? → integration. Does it require a
 browser (or the full app) to fail? → E2E. Otherwise → unit.**
+
+The layer is decided from the behaviour at risk, before choosing the fix — never
+from which files the fix ends up touching.
+
+- **A mock is an assumption, not proof.** A mocked dependency (DB client,
+  repository, gateway, API adapter) returns what the test author believes the
+  real one returns. When the behaviour depends on what a real dependency
+  returns, the test runs against that dependency, at the layer that has it.
+- **Bug fixes: reproduce where the bug lives.** If the reproduction needs a mock
+  told to return a specific value, you assumed the bug: reproduce it through the
+  real dependency instead.
+- **Test instructions in a task brief are a floor, never the layer decision.**
+  "If you change X, add an integration test" does not make unit enough when you
+  avoid X; this rule still decides.
 Extra layers (e.g. pgTAP) and when to use them: `docs/agents/testing.md`.
 
 ## TDD workflow
