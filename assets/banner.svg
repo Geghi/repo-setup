@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#151a35"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c5cff"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.1" r="0.6">
+      <stop offset="0" stop-color="#7c5cff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#7c5cff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity="0.04"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="440" rx="24" fill="url(#bg)"/>
+  <rect width="1280" height="440" rx="24" fill="url(#grid)"/>
+  <rect width="1280" height="440" rx="24" fill="url(#glow)"/>
+
+  <!-- title -->
+  <text x="80" y="128" font-size="22" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">$ read repo-setup/SKILL.md and run it</text>
+  <text x="78" y="210" font-size="84" font-weight="800" fill="#f8fafc" letter-spacing="-2">repo<tspan fill="url(#accent)">-setup</tspan></text>
+  <text x="80" y="256" font-size="26" fill="#cbd5e1">One prompt turns any repo into an agent-ready codebase.</text>
+
+  <!-- pipeline -->
+  <g font-size="20" font-weight="600" fill="#e2e8f0">
+    <line x1="150" y1="350" x2="1100" y2="350" stroke="url(#accent)" stroke-width="3" stroke-dasharray="6 8"/>
+    <g transform="translate(80,322)">
+      <rect width="190" height="56" rx="28" fill="#1e2448" stroke="#7c5cff" stroke-width="2"/>
+      <text x="95" y="35" text-anchor="middle">🚀 ship</text>
+    </g>
+    <g transform="translate(370,322)">
+      <rect width="190" height="56" rx="28" fill="#1e2448" stroke="#6d7dfb" stroke-width="2"/>
+      <text x="95" y="35" text-anchor="middle">🎫 tracker</text>
+    </g>
+    <g transform="translate(660,322)">
+      <rect width="190" height="56" rx="28" fill="#1e2448" stroke="#4fa8f3" stroke-width="2"/>
+      <text x="95" y="35" text-anchor="middle">🧪 TDD</text>
+    </g>
+    <g transform="translate(950,322)">
+      <rect width="210" height="56" rx="28" fill="#1e2448" stroke="#22d3ee" stroke-width="2"/>
+      <text x="105" y="35" text-anchor="middle">🗺️ docs + map</text>
+    </g>
+  </g>
+
+</svg>
