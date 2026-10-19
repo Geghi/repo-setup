@@ -39,7 +39,7 @@ Record: project name, project id, issue key prefix (e.g. `IGEA`), repo label.
 
 ## 3. Generate the docs
 
-Copy and fill (`{{PROJECT_NAME}}`, `{{PROJECT_ID}}`, `{{ISSUE_PREFIX}}`,
+Copy and fill (`{{PROJECT_NAME}}`, `{{WORKSPACE_ID}}`, `{{PROJECT_ID}}`, `{{ISSUE_PREFIX}}`,
 `{{REPO_LABEL}}`, `{{SIBLING_LABELS}}`):
 
 - `templates/docs/agents/issue-tracker.md` → `docs/agents/issue-tracker.md`

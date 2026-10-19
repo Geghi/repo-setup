@@ -4,6 +4,8 @@ The top `## vN` heading is the current repo-setup version.
 One line per version; what changed and how a set-up repo catches up is in `changelog/vN.md`: copy for verbatim files, what changed and why for filled templates (adapted only where it fits the repo), fill for new ones.
 `/ship` reads the files of the versions a repo is missing and applies them on request.
 
+## v7 — 2026-10-19 — tracker doc: `--workspace-id` on every multica command
+
 ## v6 — 2026-10-18 — automated rules catalogue (`references/rules/`), first rule: raw error messages never reach the client
 
 ## v5 — 2026-10-18 — test layer chosen from the bug, mocks are assumptions, reviewers hunt for better tests, setup asks which layers gate
