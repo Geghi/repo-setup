@@ -47,7 +47,7 @@ Delete the section if there are none.}}
 rules and file paths.
 
 "Check for security issues" is useless.
-"Every query against a tenant-scoped table must filter by clinic_id or go through
+"Every query against a tenant-scoped table must filter by tenant_id or go through
 src/integrations/database/\*\*" is a reviewer.}}
 
 ## Explicitly not your job

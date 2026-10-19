@@ -11,7 +11,7 @@ CI). Then confirm with the user:
 - Test runner(s) and commands per layer (unit / integration / e2e / other).
 - Integration backing services: for Supabase projects the local stack via
   `pnpm exec supabase start` + `.env.test` (+ pgTAP as a security layer, like
-  igea-saas); for other stacks ask what "real dependencies" means (docker
+  a Next.js + Supabase repo); for other stacks ask what "real dependencies" means (docker
   compose db, testcontainers, none).
 - Trophy shape is the default: fat integration middle, thin E2E top, unit for
   pure logic. Layer decision rule: DB/state involved → integration; needs a
@@ -34,7 +34,7 @@ The template already has the TDD line. Nothing to add.
 Copy `templates/docs/agents/evidence.md` → `docs/agents/evidence.md` and fill
 every `{{PLACEHOLDER}}` with the real commands and main path from step 1. Ship
 reads it to decide what proof goes in the PR. Reference example of a filled
-version: igea-livekit-agent's `docs/agents/evidence.md`.
+version: a Python agent repo's `docs/agents/evidence.md`.
 
 ## 5. Wire-up
 

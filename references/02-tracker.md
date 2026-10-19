@@ -35,7 +35,7 @@ Ask:
 - Then add this repo as a **resource** of the project (Multica UI → project →
   resources; link the GitHub repo with its default branch).
 
-Record: project name, project id, issue key prefix (e.g. `IGEA`), repo label.
+Record: project name, project id, issue key prefix (e.g. `PROJ`), repo label.
 
 ## 3. Generate the docs
 

@@ -1,7 +1,7 @@
 # Automated rules catalogue
 
 Generic good practices enforced by a check (test, lint rule, type guard), not by review.
-Each rule is a pattern: the example comes from one repo and must be re-designed for the target repo (paths, helpers, exemptions).
+Each rule is a pattern: re-design its check for the target repo (paths, helpers, exemptions).
 
 ## When to use it
 
@@ -35,4 +35,3 @@ Each rule in a file is a `##` section with:
 - **Applies when:** what to look for in the repo.
 - **Check:** preferred mechanism, then the fallback.
 - **False positives:** where they come from, how to exempt.
-- **Example:** where and how it was done, marked "reference only, re-design per repo".

@@ -23,4 +23,4 @@ Facts only: the rules live in the skill.
 
 ## Isolation
 
-{{How test data is isolated here, e.g. "every file creates its own clinic via `createTestClinic()`; never query across clinics". Delete if nothing beyond the skill's rule.}}
+{{How test data is isolated here, e.g. "every file creates its own tenant via `createTestTenant()`; never query across tenants". Delete if nothing beyond the skill's rule.}}
