@@ -35,7 +35,7 @@ On top of the phases:
 ## ⚙️ How it works
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[Your repo] --> B{New or existing?}
     B --> C[Pick phases]
     C --> D[🚀 ship]
