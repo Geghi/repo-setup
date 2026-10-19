@@ -53,20 +53,22 @@ flowchart TD
 
 ## 🚀 Setup
 
-Clone it outside your projects:
+Clone it anywhere outside your projects. Below, `<REPO_SETUP_DIR>` is the folder you cloned into:
 
 ```bash
-git clone https://github.com/Geghi/repo-setup ~/virtual_desktop/projects/shared-agents/repo-setup
+git clone https://github.com/Geghi/repo-setup <REPO_SETUP_DIR>
 ```
 
-> [!NOTE]
-> The generated `/ship` looks for this repo at the path above to check for updates.
-> Clone it elsewhere and setup still works, but the update check skips silently.
+> [!IMPORTANT]
+> Replace the default path with your `<REPO_SETUP_DIR>` in
+> [`templates/skills/ship/SKILL.md`](templates/skills/ship/SKILL.md) (step 0, "Version check").
+> The generated `/ship` reads this repo from there to check for updates;
+> with the wrong path, setup still works but the update check skips silently.
 
 Then, from the root of the repo you want to set up, tell your agent:
 
 ```text
-read ~/virtual_desktop/projects/shared-agents/repo-setup/SKILL.md and run it
+read <REPO_SETUP_DIR>/SKILL.md and run it
 ```
 
 Only one phase? Add it: `… and run only the docs phase`.
