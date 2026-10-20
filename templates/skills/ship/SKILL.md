@@ -98,7 +98,8 @@ The PR body uses the `pr` skill, never the ship report:
 - **Merge Danger**: door, blast radius, and every open finding with `file:line` and a concrete fix plan.
 - **Title**: the intent, in the commit convention.
 
-An open PR for this branch → update it, never open a second. Blocking and the gate allows publishing → draft, title prefixed `[BLOCKED]`.
+An open PR for this branch → update it, never open a second.
+When the user decides an open finding (here or later, in any chat), edit the PR body: mark it decided with the outcome (fixed in this PR / moved to <ticket> / kept, why). A PR body never lists as open what is already decided. Blocking and the gate allows publishing → draft, title prefixed `[BLOCKED]`.
 
 ## 9 — Report
 
