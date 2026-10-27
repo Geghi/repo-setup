@@ -55,7 +55,7 @@ One line per tool; each must exit non-zero on failure. Mark `serial` what can't 
 
 ## Delivery
 
-- {{If tied to a tracker: what the PR must carry to close the issue on merge, and which status `/ship` sets vs which the tracker sets itself.}}
+- {{If tied to a tracker: the status `/ship` sets when the PR exists, what happens to the issue on merge as chosen at setup (nothing / in-review / done), what the PR must carry for that (e.g. a closing keyword + key in the body), and which status the tracker sets itself.}}
 - **Gate:** anything still blocking, or checks failing → {{open a `[BLOCKED]` draft PR anyway / hold the push and ask first}}.
 
 ## Never flag

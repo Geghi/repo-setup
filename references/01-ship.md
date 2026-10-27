@@ -67,7 +67,10 @@ a few at a time, not a wall — and let the user redirect:
   Some teams want every `/ship` to belong to a ticket — find it or create it before
   branching, so the branch can carry its key — others find that pure friction on a
   solo repo. Ask, and if yes, also ask **what status a run should set** on start
-  and on PR (commonly in-progress, then in-review).
+  and on PR (commonly in-progress, then in-review), and **what happens to the issue
+  when the PR merges**: nothing (it stays where `/ship` left it), in-review, or
+  done (via the tracker's closing keyword in the PR, or a manual step). Don't pick
+  for them — it differs per team.
   **If they want PRs linked to issues, do not guess how that tracker links them.**
   Conventions differ and are easy to get subtly wrong — a key in the branch may
   link without closing, a closing keyword may need to sit immediately before the
