@@ -94,8 +94,7 @@ Launch the `docs-engineer` agent with the same inputs as the reviewers: the only
 Push (`git push -u origin HEAD`) and open the PR, with the tracker steps and blocking gate from `ship.md`'s Delivery; a gate that says "ask first" is honoured exactly.
 The PR body uses the `pr` skill, never the ship report:
 
-- **Evidence** per `docs/agents/evidence.md` (missing → the red→green test names), max 3 proofs, preferring the verifiers' captures in `$(git rev-parse --git-dir)/ship-evidence/`. The diff changes anything a person sees (UI, or generated images, diagrams, PDFs, emails) → visual evidence is mandatory, attached with `gh pr edit <n> --attach <file>` (before/after when the look changes); can't produce it → blocking, ask.
-- **Merge Danger**: door, blast radius, and every open finding with `file:line` and a concrete fix plan.
+- **Body**: the `pr` skill owns format and length. Proof per `docs/agents/evidence.md` (missing → each test file + one line on what it covers), preferring the verifiers' captures in `$(git rev-parse --git-dir)/ship-evidence/`. The diff changes anything a person sees (UI, or generated images, diagrams, PDFs, emails) → visual evidence is mandatory, attached with `gh pr edit <n> --attach <file>`; can't produce it → blocking, ask. Every open finding goes in Merge Danger.
 - **Title**: the intent, in the commit convention.
 
 An open PR for this branch → update it, never open a second.

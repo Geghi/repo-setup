@@ -31,8 +31,16 @@ The template already has the TDD line. Nothing to add.
 
 ## 4. Evidence
 
+Ask the user what a person sees or hears from this repo, since that sets the proof:
+- UI (web/mobile) → screenshots or a recording of the main path (`{{LEVEL2_PROOF}}`).
+- Voice/call flow → an audio recording or the call transcript.
+- Backend/API only, CLI, library → no level 2: delete the Livello 2 section, the
+  proof stops at a real request/response or command output (`{{LEVEL1_PROOF}}`).
+- Generated files (PDF, email, images) → the produced file attached.
+Then ask for the main path to show (`{{MAIN_PATH}}`).
+
 Copy `templates/docs/agents/evidence.md` → `docs/agents/evidence.md` and fill
-every `{{PLACEHOLDER}}` with the real commands and main path from step 1. Ship
+every `{{PLACEHOLDER}}` with those answers and the commands from step 1. Ship
 reads it to decide what proof goes in the PR. Reference example of a filled
 version: a Python agent repo's `docs/agents/evidence.md`.
 

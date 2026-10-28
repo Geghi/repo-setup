@@ -26,8 +26,14 @@ Livello 0 + un esempio reale: {{LEVEL1_PROOF}}
 Livello 1 + {{LEVEL2_PROOF}} del percorso principale ({{MAIN_PATH}}),
 allegato alla PR con `gh pr edit <numero> --attach <file>` (png/jpg/gif/webp/mp4/mov/webm).
 
+- Sopra ogni cattura (immagine, video, audio), una riga: cosa mostra e cosa dimostra.
+  Una cattura senza contesto non è una prova.
+- Copertura: ogni comportamento che si vede o si sente dichiarato dalla PR ha la
+  sua cattura, compreso quello che deve restare uguale (il caso di default).
+  Un comportamento così coperto solo da un test → aggiungi la cattura.
+
 ## Nella PR
 
-Sezione `## Evidence`: livello scelto, comandi lanciati, prova. Nient'altro.
+Il formato e la lunghezza della sezione `## Evidence` li decide la skill `pr`.
 Per produrre l'evidenza lancia solo i test che servono a produrla, non
 l'intera suite.

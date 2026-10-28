@@ -4,6 +4,8 @@ The top `## vN` heading is the current repo-setup version.
 One line per version; what changed and how a set-up repo catches up is in `changelog/vN.md`: copy for verbatim files, what changed and why for filled templates (adapted only where it fits the repo), fill for new ones.
 `/ship` reads the files of the versions a repo is missing and applies them on request.
 
+## v12 — 2026-10-28 — compact PR body owned by the pr skill; evidence: setup asks what a person sees, captioned images covering every visible behaviour
+
 ## v11 — 2026-10-27 — setup asks what happens to the issue when the PR merges
 
 ## v10 — 2026-10-21 — catch-up: migrate map `path:line` citations to `path::symbol`

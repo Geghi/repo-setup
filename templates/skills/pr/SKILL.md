@@ -9,36 +9,45 @@ metadata:
     url: "https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md"
 ---
 
-Use this template for writing the PR body:
+The body exists to decide the merge, not to retell the work.
+The details stay in the commits, the tests and the ship report.
+This skill is the only source for the body's format and length.
+`docs/agents/evidence.md` says what counts as proof and how to capture it.
+
+Budget: about 150–200 words, not counting captures and the one diagram.
+Each behaviour is stated once, in one section.
 
 ```markdown
 ## Summary
 
-<diagram, diff-sketch, or tree>
+<1–2 sentences: what changes for the user, in CONTEXT.md language>
+
+<one diagram or diff sketch, ≤ ~10 lines — always>
 
 ## Evidence
 
-- **Before:** <screenshot/output/failing test run>
-  **After:** <screenshot/output/passing test run>
+**<one line: what this capture shows and what it proves>**
+<the capture: image, video or audio, the kind `docs/agents/evidence.md` asks for>
+
+- `<test file>`: <what it covers, one line>. Red before the change, green after.
+- Gates green<, except: <name> — <why it is not this PR>>
 
 ## Merge Danger
 
-**Door:** <one-way or two-way>
+**Door:** <one-way | two-way> · **Blast radius:** <scope, a few words>
 
-<optional: description>
+Open:
+- <what> → <plan> (`file:line`)
 
-**Blast Radius:** <one-word description>
-
-<optional: potential ramifications of merge>
+<tracker closing line, when `ship.md` Delivery requires one, always last>
 ```
 
-## Sections
+## Summary
 
-Skip all preambles and keep prose brief. Use the user's domain language from `CONTEXT.md`.
+What the user sees or gets, not how the code does it.
+Implementation details only when a reviewer would get the merge wrong without them.
 
-### Summary
-
-Pick the smallest view that makes the key point clear.
+Always one visual, the smallest that makes the point:
 
 - Show logic or an algorithm as pseudocode:
 
@@ -149,22 +158,24 @@ function expandSkill(command: string): string {
 }
 ```
 
-#### Guidance
+Keep only the calls, files and states the point needs.
 
-Place each visual next to the short text it supports. Keep only the calls, files, props, states, and boundaries needed to answer the user's current question or the options to resolve the current discussion point.
+## Evidence
 
-You may use one of these, you may use several, it is unlikely you will use all of them. Use your judgement and don't overwhelm the user.
+One entry per behaviour the PR claims: `behaviour → proof`.
+- Behaviour a person sees or hears → the capture `docs/agents/evidence.md` asks for
+  (screenshot, video, audio, generated file), with one caption line above it.
+  Cover every such behaviour, including the default that must stay unchanged.
+- No such behaviour in this repo (backend, CLI, library) → no captures.
+- Not visible → the test (file + one line on what it covers), or a real request/response.
+- What has no proof, one line: what and why.
 
-### Evidence
+Never: one block per test (name / asserts / why), formulas, the full list of gates, a "browser verify" section the captures already show.
 
-Concrete evidence that the change works. Show a before and after.
+## Merge Danger
 
-Screenshots are S-tier - when the environment is set up for it and the change is visual.
+Two-way door: cheap to roll back. One-way door: destructive or hard to reverse (data, migrations already applied, published contracts).
+Blast radius: what can break if it is wrong (layout, consumers, mobile, …).
 
-Execution-based evidence is A-tier. Test results, console output. Show the exact test that now fails and passes, using pseudocode.
-
-### Merge Danger
-
-Describe whether it's a one-way or two-way door. You can walk back through two-way doors, but not one-way doors. A PR that is cheap to roll back is lower risk. Changes that involve destructive actions or hard-to-reverse decisions are one-way doors.
-
-The blast radius is the potential impact or scope of the changes introduced by this PR. Consider all possibilities. Examples are layout shift, breakages for consumers, mobile responsiveness, etc.
+Open findings: one line each, with `file:line` and the plan.
+A finding the user has decided says so (fixed here / moved to <ticket> / kept, why), never listed as open.
