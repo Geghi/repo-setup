@@ -83,3 +83,16 @@ Two rules apply to every repo set up here:
   `default_stages` keeps the gate hooks off checkout and rebase.
   Re-run `pre-commit install` once so the two new hook types are installed.
   Check: change the lockfile on a branch, `git checkout` it, the install runs; check out again with no lockfile change, it does not.
+
+## 7. CI triggers
+
+`/ship` already runs every gate locally, so a PR CI run on every open repeats it and costs paid Actions minutes.
+Ask the user: "CI on PRs only when the `run-ci` label is added (default), or on every PR open?"
+
+- **Label only (default).** PR workflow triggers `pull_request: types: [labeled]`, every job gated on `github.event.label.name == 'run-ci'` (plus `workflow_dispatch`).
+  Create the `run-ci` label if missing.
+  Workflow header comment: CI runs only when `run-ci` is added; remove and re-add it to re-run.
+  Add one line to `docs/agents/workflow.md`: add `run-ci` on risky PRs (dependency bumps, CI/infra, migrations) or when asked; never re-run CI without asking.
+- **Every PR.** Keep `opened`, `reopened`, `ready_for_review`, `synchronize` as the repo has them.
+
+No PR workflow yet → note the choice in `docs/agents/workflow.md` for when one is added.
