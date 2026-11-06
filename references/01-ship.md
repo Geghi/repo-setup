@@ -61,7 +61,8 @@ a few at a time, not a wall — and let the user redirect:
   dependency isn't up (blocking, or "not run" in the report — never "passed").
   A layer left out is written under "Never run automatically" with why.
 - **Extra gates?** Read `references/gate-tools.md`, match it against what step 1 found, and propose the 2–4 that fit best, one line each on what they'd catch here. The user picks; add nothing they didn't.
-- **Model?** Default `opus` for repo reviewers; bundled agents run `opus` at effort `medium`. Propose a cheaper model only for a mechanical, narrow reviewer, and say why.
+- **Reviewer levels and runtimes.** Configure `.agents/ship.md` with `light` and `standard` model/effort mappings for each runtime the repo uses. Ask before enabling `deep`; for now leave it disabled unless explicitly requested during setup. The ship skill chooses a level on every run from reviewer responsibility, intent, and code-only diff size; do not assign per-role base levels.
+- **For each role:** record its responsibility/scope in the manifest, including bundled general, standards, spec, tests (if used), verifier, docs engineer, and specialists. The single role manifest is the source of truth; do not duplicate model choices in agent frontmatter.
 - **Areas to leave alone?** Generated code, vendored files, legacy under rewrite.
 - **Tie each run to an issue?** Only worth asking when step 1 found a tracker.
   Some teams want every `/ship` to belong to a ticket — find it or create it before
@@ -99,7 +100,7 @@ pipeline reads these files as fact.
 
 | Template | Copy to | One per |
 |---|---|---|
-| `templates/ship/ship.md` | `.agents/ship.md` | repo |
+| `templates/ship/ship.md` | `.agents/ship.md` | repo; includes reviewer runtime/model policy and role manifest |
 | `templates/ship/docs-engineer.md` | `.claude/agents/ship/docs-engineer/docs-engineer.md` | repo |
 | `templates/ship/verify.md` | `.agents/verify.md` | repo |
 | `templates/ship/review-tests.md` | `.claude/agents/ship/review-tests/review-tests.md` | repo (recommended) |

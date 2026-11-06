@@ -10,7 +10,6 @@ this comment.
 name: docs-engineer
 description: Documentation engineer for {{repo-name}} — verifies what a diff actually changed, then updates {{the repo's docs surfaces}} to match.
 tools: Read, Write, Edit, Grep, Glob, Bash
-model: {{opus}}
 
 ---
 

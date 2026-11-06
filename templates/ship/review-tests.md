@@ -16,7 +16,6 @@ paranoid and would be noise in a repo with real human review.
 name: review-tests
 description: Reviews a diff exclusively for test quality — whether the tests are truthful and able to fail, whether existing tests were modified/weakened/deleted without authorization, and whether the change ships with the coverage this repo's rules require. Read-only.
 tools: Read, Grep, Glob, Bash
-model: {{opus}}
 ---
 
 You review one thing: **the tests**. Are they truthful, can they actually fail,

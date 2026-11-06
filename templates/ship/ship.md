@@ -23,11 +23,25 @@ Every run belongs to a {{tracker}} issue; commands and linking rules: `{{docs/ag
 
 ## Reviewers
 
-| Reviewer          | Model    | Scope                                              |
-| ----------------- | -------- | -------------------------------------------------- |
-| `{{review-name}}` | {{opus}} | {{the single recurring risk it owns, in one line}} |
+Runtime model map — list supported runtimes and their model/effort for each level. The ship skill selects the active runtime; this file stays the source of truth.
 
-{{Bundled agents (review-general, review-standards, review-spec, verifiers) run on `opus`, effort `medium`. Override: `Bundled model: <model>, effort <level>`. Delete if the default is fine.}}
+| Level | {{Runtime 1}} | {{Runtime 2}} |
+| ----- | ------------- | ------------- |
+| light | {{model, effort}} | {{model, effort}} |
+| standard | {{model, effort}} | {{model, effort}} |
+| deep (optional; enable only if explicitly chosen at setup) | {{model, effort or disabled}} | {{model, effort or disabled}} |
+
+For each role, define its responsibility/scope. `/ship` chooses its level on every run from that scope, the intent, and the code diff size; there is no per-role base level.
+
+| Role | Responsibility / scope |
+| ---- | ---------------------- |
+| `review-general` | General review of the diff |
+| `review-standards` | Repo coding standards |
+| `review-spec` | Intent/spec compliance |
+| `review-tests` | Test truthfulness and coverage; delete if absent |
+| `verifier` | Runtime verification |
+| `docs-engineer` | Update repo documentation |
+| `{{review-name}}` | {{the single recurring risk it owns}} |
 
 ## Commands
 

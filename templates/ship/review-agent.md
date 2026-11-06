@@ -17,7 +17,6 @@ itself to stop reporting a class of bug.
 name: review-{{name}}
 description: {{when this reviewer applies — the trigger, not a topic list}}
 tools: Read, Grep, Glob, Bash
-model: {{opus}}
 
 ---
 

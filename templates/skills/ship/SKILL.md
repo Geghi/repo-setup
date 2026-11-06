@@ -22,7 +22,7 @@ Its version is the top `## vN` heading of its `CHANGELOG.md`; this repo's is the
 
 Then read `.agents/ship.md` at the repo root.
 Missing → the repo isn't set up: say so and stop. Setup is the source's `references/01-ship.md`.
-It is authoritative for base branch, reviewers, commands, never-fix, ignore patterns and delivery: never guess what it doesn't say.
+It is authoritative for base branch, reviewer responsibilities, runtime/model mappings, commands, never-fix, ignore patterns and delivery: never guess what it doesn't say.
 
 Empty `$(git rev-parse --git-dir)/ship-check/` and `ship-evidence/`: each run keeps only its own logs and captures.
 
@@ -50,9 +50,9 @@ Launch in a single message, in parallel:
 - every reviewer listed in `ship.md`;
 - the bundled ones — `references/review-general.md`, `references/review-standards.md`, `references/review-spec.md` — as `general-purpose` subagents, prompt = the whole file.
 
-Every bundled agent (reviewers here, verifiers in step 6) runs on model `opus`, effort `medium`, unless `ship.md` overrides it.
+For each role in `.agents/ship.md`, choose `light` or `standard` for this run from its scope, the intent, and the size/scope of the code diff. Use `deep` only when `.agents/ship.md` explicitly enables it. Ignore docs, maps, generated files, and other non-code changes when judging diff size. A small change can use `light` when it does not touch that role's risk; use `standard` when the intent affects that risk or the code change is broad. Resolve the chosen level through the active runtime's mapping in `.agents/ship.md`; if missing, ask rather than guess.
 
-Give each: the base branch and `git diff <base>...HEAD` to run itself (never paste the diff), the intent verbatim, and the changed-file list minus `ship.md`'s ignore patterns (and tell it to skip those paths).
+Launch all applicable reviewers together in one parallel delegation. Give each its instructions, scope, resolved model/effort, base branch, `git diff <base>...HEAD` to run itself (never paste the diff), intent verbatim, and changed-file list minus ignored paths.
 Nothing else: never the implementer's reasons for a design or test-layer choice ("the query didn't change, so unit is enough"). Reviewers judge those choices themselves.
 Reviewers are read-only.
 
@@ -87,7 +87,7 @@ Diff with a runtime effect → follow `references/verify.md`. Otherwise skip, on
 
 ## 7 — Docs
 
-Launch the `docs-engineer` agent with the same inputs as the reviewers: the only agent with write access, run now so it documents the final code.
+Launch the `docs-engineer` agent at `light`, resolved through the active runtime mapping, with the same review inputs: the only agent with write access, run now so it documents the final code.
 
 ## 8 — Deliver
 
@@ -108,7 +108,10 @@ Terminal only, in plain language. Lead with the PR link and what the user must d
 ## ship report — <branch>
 
 **Intent:** <what the user set out to do>
-**Reviewers:** <names> · **Found:** <N blocking, N warnings, N nits> · **Fixed:** <N> · **Open:** <N>
+**Reviewer levels by round:**
+- Round 1: `<reviewer>` — Light; `<reviewer>` — Standard
+- Round 2: `<reviewer>` — Standard
+**Found:** <N blocking, N warnings, N nits> · **Fixed:** <N> · **Open:** <N>
 **Verify:** <N verifiers · N found · N fixed — or "skipped: <why>">
 
 ### 🔴 Needs you
