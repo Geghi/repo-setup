@@ -2,9 +2,9 @@
 
 Goal: the repo has a working `/ship` pipeline.
 
-1. Inspect `.agents/ship.md`, `.agents/verify.md`, `.agents/ship/`, `.agents/pr/`, both runtimes' `skills/{ship,pr}/` and `.agents/ship/agents/`, including symlinks and extra files.
-2. Any existing or partial installation → follow `changelog/v15.md`'s inventory and migration; preserve all repo choices, stop on unresolved conflicts, and never overwrite existing files. Do not run the new-repo questionnaire again for an existing config.
-3. For a new installation, copy `templates/shared/ship/` to `.agents/ship/` and `templates/shared/pr/` to `.agents/pr/`.
+1. Inspect `.agents/ship.md`, `.agents/verify.md`, `.agents/ship/`, `.agents/pr/`, both runtimes' `skills/{ship,pr}/`, `.claude/agents/ship/` and `.agents/ship/agents/`, including symlinks and extra files.
+2. Any existing or partial installation → follow `changelog/v16.md` and `changelog/v15.md` in the repo-setup source checkout; preserve all repo choices, stop on unresolved conflicts, and never overwrite existing files. If `.agents/ship.md` exists, preserve its choices, complete or stop the migration, then end this phase without running the new-repo questionnaire. If config is missing, resolve existing files first and fill only missing configuration using the questionnaire below.
+3. For a new installation with no existing or partial files, copy `templates/shared/ship/` to `.agents/ship/` and `templates/shared/pr/` to `.agents/pr/`.
    Copy each `templates/entrypoints/{ship,pr}/SKILL.md` to both `.claude/skills/{ship,pr}/SKILL.md` and `.agents/skills/{ship,pr}/SKILL.md` as ordinary files; never use symlinks.
    Confirm every destination is absent before copying; an occupied destination is a conflict, not permission to overwrite.
 4. Run the guided setup below only when `.agents/ship.md` is absent.

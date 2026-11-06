@@ -4,6 +4,8 @@ The top `## vN` heading is the current repo-setup version.
 One line per version; what changed and how a set-up repo catches up is in `changelog/vN.md`: copy for verbatim files, what changed and why for filled templates (adapted only where it fits the repo), fill for new ones.
 `/ship` reads the files of the versions a repo is missing and applies them on request.
 
+## v16 — 2026-11-06 — safe update preflight, complete version stamps and explicit reviewer roles
+
 ## v15 — 2026-11-06 — portable ship and pr guides with shared runtime entrypoints and safe migration
 
 ## v14 — 2026-11-06 — per-repo reviewer model policy, selected by role, intent, and code diff size

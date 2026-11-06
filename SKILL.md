@@ -11,7 +11,7 @@ can say "run only the docs phase".
 1. **Locate the target repo.** You must be in (or be told) the root of a git
    repository. If not in one, ask for the path. Never set up this skill's own repo.
 2. **Detect new vs existing.** Existing = has source code beyond scaffolding.
-   Also note per-phase state: ship is complete only when `.agents/ship.md`, `.agents/verify.md`, `.agents/ship/guide.md`, its references and configured agents, `.agents/pr/guide.md`, and both runtimes’ ordinary `skills/{ship,pr}/SKILL.md` entrypoints exist and agree; detect legacy or partial installations separately and, when the ship phase is selected, run the conflict-safe migration in `changelog/v15.md`. Tracker: `docs/agents/issue-tracker.md` + `.claude/skills/triage/`
+   Also note per-phase state: ship is complete only when `.agents/ship.md`, `.agents/verify.md`, `.agents/ship/guide.md`, its references and configured agents, `.agents/pr/guide.md`, and both runtimes’ ordinary `skills/{ship,pr}/SKILL.md` entrypoints exist and agree; inspect `.claude/agents/ship/` as well; detect legacy or partial installations separately and, when the ship phase is selected, follow `changelog/v16.md` and `changelog/v15.md`. Tracker: `docs/agents/issue-tracker.md` + `.claude/skills/triage/`
    present? `CLAUDE.md` present? tests configured? `docs/agents/evidence.md` present? A complete phase is skipped
    unless the user asks to redo it.
 3. **Confirm phases.** Default: all four, in order. Ask once, up front, which to run:
@@ -33,8 +33,7 @@ can say "run only the docs phase".
    (not tied to a phase).
 7. **Automated rules**: follow `references/rules/README.md` — propose the
    catalogue rules that fit this repo's architecture; add only those the user picks.
-8. **Stamp the version** only after all selected updates and migrations complete without unresolved conflicts: write the top `## vN` number of `CHANGELOG.md` to
-   `.agents/repo-setup-version` in the target repo. `/ship` reads it to offer updates.
+8. **Stamp the version** only when all applicable setup phases and all missing version changes have been completed or explicitly resolved, with no unresolved conflicts. A partial setup or selected-phase run does not advance the global stamp. Then write the top `## vN` number of `CHANGELOG.md` to `.agents/repo-setup-version`. `/ship` reads it to offer updates.
 9. **Close with a summary**: what was created/changed, what remains manual
    (e.g. `multica login`, plugin install, creating the GitHub repo/remote).
 

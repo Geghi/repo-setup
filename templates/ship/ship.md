@@ -31,17 +31,17 @@ Runtime model map — list supported runtimes and their model/effort for each le
 | standard | {{model, effort}} | {{model, effort}} |
 | deep (optional; enable only if explicitly chosen at setup) | {{model, effort or disabled}} | {{model, effort or disabled}} |
 
-For each role, define its responsibility/scope and, for repo-specific roles, the repo-root path to its prompt under `.agents/ship/agents/`. `/ship` chooses its level on every run from that scope, the intent, and the code diff size; there is no per-role base level.
+For each role, define its responsibility/scope, category (bundled, specialist, verifier or docs), and, for repo-specific roles, the repo-root path to its prompt under `.agents/ship/agents/`. `/ship` chooses its level on every run from that scope, the intent, and the code diff size; there is no per-role base level.
 
-| Role | Responsibility / scope |
-| ---- | ---------------------- |
-| `review-general` | General review of the diff |
-| `review-standards` | Repo coding standards |
-| `review-spec` | Intent/spec compliance |
-| `review-tests` | Test truthfulness and coverage; delete if absent |
-| `verifier` | Runtime verification |
-| `docs-engineer` | Update repo documentation |
-| `{{review-name}}` | {{the single recurring risk it owns}} |
+| Role | Category | Responsibility / scope | Prompt |
+| ---- | -------- | ---------------------- | ------ |
+| `review-general` | bundled | General review of the diff | `.agents/ship/references/review-general.md` |
+| `review-standards` | bundled | Repo coding standards | `.agents/ship/references/review-standards.md` |
+| `review-spec` | bundled | Intent/spec compliance | `.agents/ship/references/review-spec.md` |
+| `review-tests` | specialist | Test truthfulness and coverage; delete if absent | `.agents/ship/agents/review-tests/review-tests.md` |
+| `verifier` | verifier | Runtime verification | `.agents/ship/references/verifier.md` |
+| `docs-engineer` | docs | Update repo documentation | `.agents/ship/agents/docs-engineer/docs-engineer.md` |
+| `{{review-name}}` | specialist | {{the single recurring risk it owns}} | `.agents/ship/agents/{{review-name}}/{{review-name}}.md` |
 
 ## Commands
 

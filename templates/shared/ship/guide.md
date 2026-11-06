@@ -3,7 +3,7 @@
 Takes the work in the tree to a reviewed, documented, pushed branch, plus a report of what needs the user.
 This file only orchestrates: the reviewers do the reviewing.
 Repo config lives in `.agents/ship.md` and repo-specific agent prompts under `.agents/ship/agents/`.
-Resolve every reference in this guide from the repository root; read each agent document in full when delegating.
+Resolve `.agents/` and other project paths from the target repository root. Resolve `changelog/` and setup references from the repo-setup source checkout named below. Read each agent document in full when delegating.
 
 ## 0 — Version and config
 
@@ -11,7 +11,7 @@ Resolve every reference in this guide from the repository root; read each agent 
 Its version is the top `## vN` heading of its `CHANGELOG.md`; this repo's is the number in `.agents/repo-setup-version` (missing = none).
 
 - This repo is behind → say "repo-setup vN, this repo has vM / none", list the `CHANGELOG.md` lines in between, and ask to update.
-  Yes → before applying any historical copy instructions, follow the conflict-safe preflight in `changelog/v15.md` when crossing v15. Then read `changelog/vK.md` for each missing version, oldest first, and apply it: copy what it says to copy; for a changed template, propose the edit to this repo's filled copy only where it fits, show it, and apply what the user accepts. Only after every migration and accepted change completes, write `N` to `.agents/repo-setup-version`, commit it alone (`chore: update repo-setup to vN`), continue.
+  Yes → before applying any missing version, follow the conflict-safe preflight in `changelog/v16.md` in the source checkout when crossing v16. Then read `changelog/vK.md` for each missing version, oldest first, and apply it: copy what it says to copy; for a changed template, propose the edit to this repo's filled copy only where it fits, show it, and apply what the user accepts. Only after every applicable missing change, including unrelated phases, and every migration completes without unresolved conflicts, write `N` to `.agents/repo-setup-version`, commit it alone (`chore: update repo-setup to vN`), continue.
   No → continue with what's there.
 - Source folder missing (another machine) → skip silently.
 
@@ -42,8 +42,10 @@ Never `--no-verify`: a failing hook means fix the cause.
 
 Launch in a single message, in parallel:
 
-- every reviewer listed in `ship.md`;
-- the bundled ones — `.agents/ship/references/review-general.md`, `.agents/ship/references/review-standards.md`, `.agents/ship/references/review-spec.md` — as `general-purpose` subagents, prompt = the whole file.
+- the bundled reviewers — `.agents/ship/references/review-general.md`, `.agents/ship/references/review-standards.md`, `.agents/ship/references/review-spec.md` — each exactly once as a `general-purpose` subagent, prompt = the whole file;
+- each configured specialist reviewer, including `review-tests` when configured, using its prompt path in `.agents/ship.md`.
+
+The manifest also lists bundled roles, the verifier and docs engineer for scope and model selection; do not launch those again here. The verifier and docs engineer run in steps 6 and 7.
 
 For each role in `.agents/ship.md`, choose `light` or `standard` for this run from its scope, the intent, and the size/scope of the code diff. Use `deep` only when `.agents/ship.md` explicitly enables it. Ignore docs, maps, generated files, and other non-code changes when judging diff size. A small change can use `light` when it does not touch that role's risk; use `standard` when the intent affects that risk or the code change is broad. Resolve the chosen level through the active runtime's mapping in `.agents/ship.md`; if missing or the active runtime cannot launch the mapped model/effort, ask rather than guess or silently substitute.
 
