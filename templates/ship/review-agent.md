@@ -1,6 +1,6 @@
 <!--
 TEMPLATE — a repo specialist reviewer. Copy to
-`.claude/agents/ship/review-<name>/review-<name>.md`, fill every
+`.agents/ship/agents/review-<name>/review-<name>.md`, fill every
 {{PLACEHOLDER}}, and delete this comment.
 
 One per recurring risk the repo has ACTUALLY hit. Not one per topic that sounds
@@ -61,4 +61,4 @@ the same false positive coming back every run.}}
 
 ## Output
 
-Follow `.claude/skills/ship/references/output.md`.
+Follow `.agents/ship/references/output.md`.

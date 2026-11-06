@@ -1,6 +1,6 @@
 <!--
 TEMPLATE — the docs agent. Copy to
-`.claude/agents/ship/docs-engineer/docs-engineer.md`, fill every
+`.agents/ship/agents/docs-engineer/docs-engineer.md`, fill every
 {{PLACEHOLDER}}, delete the blocks marked OPTIONAL that do not apply, and delete
 this comment.
 -->

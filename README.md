@@ -61,7 +61,7 @@ git clone https://github.com/Geghi/repo-setup <REPO_SETUP_DIR>
 
 > [!IMPORTANT]
 > Replace the default path with your `<REPO_SETUP_DIR>` in
-> [`templates/skills/ship/SKILL.md`](templates/skills/ship/SKILL.md) (step 0, "Version check").
+> [`templates/shared/ship/guide.md`](templates/shared/ship/guide.md) (step 0, "Version check").
 > The generated `/ship` reads this repo from there to check for updates;
 > with the wrong path, setup still works but the update check skips silently.
 

@@ -34,5 +34,5 @@ Smell baseline (Fowler, _Refactoring_ ch. 3) — what it is → how to fix:
 
 ## Output
 
-Follow `.claude/skills/ship/references/output.md`.
+Follow `.agents/ship/references/output.md`.
 `needs_user: yes` only when the fix would change user-visible behaviour.

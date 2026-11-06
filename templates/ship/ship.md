@@ -31,7 +31,7 @@ Runtime model map — list supported runtimes and their model/effort for each le
 | standard | {{model, effort}} | {{model, effort}} |
 | deep (optional; enable only if explicitly chosen at setup) | {{model, effort or disabled}} | {{model, effort or disabled}} |
 
-For each role, define its responsibility/scope. `/ship` chooses its level on every run from that scope, the intent, and the code diff size; there is no per-role base level.
+For each role, define its responsibility/scope and, for repo-specific roles, the repo-root path to its prompt under `.agents/ship/agents/`. `/ship` chooses its level on every run from that scope, the intent, and the code diff size; there is no per-role base level.
 
 | Role | Responsibility / scope |
 | ---- | ---------------------- |

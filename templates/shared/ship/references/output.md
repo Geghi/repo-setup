@@ -10,7 +10,7 @@ findings[N]{severity,file,finding,why,fix,needs_user}:
 - `N` is the row count. No findings → the header alone, never padding.
 - A field with a comma or newline goes in double quotes, inner quotes doubled.
 - `severity`: `blocking` (breaks something, leaks data, or breaks a hard repo rule — not "I'd write it differently"), `warning`, or `nit`.
-- `needs_user`: `yes` when the fix is a product decision or needs something only the user has (see `.claude/skills/ship/references/fix-rules.md`), else `no`.
+- `needs_user`: `yes` when the fix is a product decision or needs something only the user has (see `.agents/ship/references/fix-rules.md`), else `no`.
 - Terse, plain words. `finding` ≤ 12 words, `why` ≤ 20, `fix` ≤ 15. No preamble, no restating the code, no text outside the table.
 - `why` is the concrete failure, as an example when one fits: "caller says 'Rossi' twice → second booking overwrites the first".
 - Read the code around each hunk before reporting, not just the diff.

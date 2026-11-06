@@ -15,4 +15,4 @@ Can't start it (missing secret, service down) → one blocking row saying what i
 
 ## Output
 
-Follow `.claude/skills/ship/references/output.md`; each `why` gives the exact steps to reproduce.
+Follow `.agents/ship/references/output.md`; each `why` gives the exact steps to reproduce.

@@ -202,7 +202,7 @@ for a cleaner decomposition.
 
 ## Output
 
-Follow `.claude/skills/ship/references/output.md`.
+Follow `.agents/ship/references/output.md`.
 
 The approval-bar blockers above → `blocking`; a real but non-blocking maintainability issue → `warning`; cosmetic or low-conviction → `nit`.
 Structural recommendations are `needs_user: no`: `ship` fixes them.

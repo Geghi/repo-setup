@@ -6,13 +6,13 @@
 | `to-tickets/` | 02-tracker | mattpocock/skills (glossary → `CONTEXT.md`) | none |
 | `triage/` | 02-tracker | mattpocock/skills (glossary → `CONTEXT.md`) | none |
 
-Copied as-is (no placeholders), into `.claude/skills/<name>/`:
+Ship and pr use the shared guides and entrypoints in phase 01.
+
+The remaining skills are copied as-is (no placeholders), into `.claude/skills/<name>/`:
 
 | Skill | Phase | Source |
 |---|---|---|
 | `tdd/` | 03-testing | mattpocock/skills (glossary → `CONTEXT.md`) |
-| `ship/` | 01-ship | ours (formerly global `~/.claude/skills/ship`) |
-| `pr/` | 01-ship | mattpocock/skills (glossary → `CONTEXT.md`) |
 | `codebase-design/` | 03-testing | mattpocock/skills, needed by `tdd` (glossary → `CONTEXT.md`) |
 | `grill-with-docs/` | 04-docs | mattpocock/skills — wrapper, calls the two below |
 | `grilling/` | 04-docs | mattpocock/skills |

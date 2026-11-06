@@ -2,8 +2,12 @@
 
 Goal: the repo has a working `/ship` pipeline.
 
-1. Copy `templates/skills/ship/` → `.claude/skills/ship/` and `templates/skills/pr/` → `.claude/skills/pr/`.
-2. `.agents/ship.md` exists → stop ("ship already initialized"). Otherwise run the guided setup below.
+1. Inspect `.agents/ship.md`, `.agents/verify.md`, `.agents/ship/`, `.agents/pr/`, both runtimes' `skills/{ship,pr}/` and `.agents/ship/agents/`, including symlinks and extra files.
+2. Any existing or partial installation → follow `changelog/v15.md`'s inventory and migration; preserve all repo choices, stop on unresolved conflicts, and never overwrite existing files. Do not run the new-repo questionnaire again for an existing config.
+3. For a new installation, copy `templates/shared/ship/` to `.agents/ship/` and `templates/shared/pr/` to `.agents/pr/`.
+   Copy each `templates/entrypoints/{ship,pr}/SKILL.md` to both `.claude/skills/{ship,pr}/SKILL.md` and `.agents/skills/{ship,pr}/SKILL.md` as ordinary files; never use symlinks.
+   Confirm every destination is absent before copying; an occupied destination is a conflict, not permission to overwrite.
+4. Run the guided setup below only when `.agents/ship.md` is absent.
 
 Produce `.agents/ship.md`, `.agents/verify.md` and the agents this repo needs, **with the user**.
 Work out what you can first, so the conversation is about what you can't infer: which reviewers this repo deserves, and what each should obsess over.
@@ -30,7 +34,7 @@ Present findings compactly, propose a reviewer set with a reason each, then ask 
 a few at a time, not a wall — and let the user redirect:
 
 - **Base/working branch?** Always ask: many teams branch off and PR against `test`/`develop`, not the git default.
-- **Which reviewers?** The generalist is already covered — `templates/skills/ship/references/review-general.md`
+- **Which reviewers?** The generalist is already covered — `templates/shared/ship/references/review-general.md`
   runs on every `/ship` in every repo automatically, no setup, nothing to add to
   `ship.md` for it.
   **`review-tests` is the one to propose first**, and in most repos the answer is
@@ -82,7 +86,7 @@ a few at a time, not a wall — and let the user redirect:
 - **Delivery:** which base branch, and **what happens when something is still
   blocking** — a `[BLOCKED]` draft PR anyway, or hold the push and ask first?
   The PR body is always the `pr` skill; the full report is terminal only.
-- **What must ship never fix on its own?** Beyond `templates/skills/ship/references/fix-rules.md`'s
+- **What must ship never fix on its own?** Beyond `templates/shared/ship/references/fix-rules.md`'s
   defaults — areas where only the user decides (auth, migrations, money…).
 - **What must reviewers NOT flag** — deliberate patterns that look wrong. Prevents
   the same false positive every single run.
@@ -101,10 +105,10 @@ pipeline reads these files as fact.
 | Template | Copy to | One per |
 |---|---|---|
 | `templates/ship/ship.md` | `.agents/ship.md` | repo; includes reviewer runtime/model policy and role manifest |
-| `templates/ship/docs-engineer.md` | `.claude/agents/ship/docs-engineer/docs-engineer.md` | repo |
+| `templates/ship/docs-engineer.md` | `.agents/ship/agents/docs-engineer/docs-engineer.md` | repo |
 | `templates/ship/verify.md` | `.agents/verify.md` | repo |
-| `templates/ship/review-tests.md` | `.claude/agents/ship/review-tests/review-tests.md` | repo (recommended) |
-| `templates/ship/review-agent.md` | `.claude/agents/ship/review-<name>/review-<name>.md` | recurring risk |
+| `templates/ship/review-tests.md` | `.agents/ship/agents/review-tests/review-tests.md` | repo (recommended) |
+| `templates/ship/review-agent.md` | `.agents/ship/agents/review-<name>/review-<name>.md` | recurring risk |
 
 The templates carry the structure and the reasoning behind each section; this file
 only covers what they cannot know.
@@ -131,14 +135,14 @@ the repo actually has a `map/` code map, delete the whole block otherwise.
 
 ### Reviewers
 
-One folder each, under `.claude/agents/ship/` so they stay clear of the repo's
+One folder each, under `.agents/ship/agents/` so they stay clear of the repo's
 general-purpose agents. Keep each one **narrow**: the diff, its own history, and
 the specific files its domain concern lives in — not a whole-repo audit.
 `review-general.md` already reads broadly to judge the diff correctly on its own;
 a specialist's value is precision on one recurring risk, not repeating that breadth.
 
 ```
-.claude/agents/ship/review-<name>/
+.agents/ship/agents/review-<name>/
     review-<name>.md            the agent
     references/<topic>.md       optional deep detail, loaded on demand
 ```
@@ -154,9 +158,7 @@ triggers it, it belongs in the agent file. Two or three per reviewer is plenty.
 
 Show the user everything you wrote. Tell them to edit the checklists freely: those
 files are the system, and they're meant to be tuned by hand as the repo teaches them
-what to look for. Nothing under `.claude/` is ever changed by a ship run — reviewers
+what to look for. Reviewer instructions are never changed by a ship run — reviewers
 are read-only and the reviewer instructions are the user's to edit.
 
 Then stop. Don't run the pipeline in the same turn.
-
-**Transition:** `~/.claude/skills/ship` is a symlink to `templates/skills/ship/`, so repos without a local copy still get `/ship`. Once every repo has its own copy: `rm ~/.claude/skills/ship`.

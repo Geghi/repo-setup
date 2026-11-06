@@ -15,4 +15,4 @@ Not your job: code quality (`review-general`), coding standards (`review-standar
 
 ## Output
 
-Follow `.claude/skills/ship/references/output.md`.
+Follow `.agents/ship/references/output.md`.

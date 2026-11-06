@@ -1,14 +1,9 @@
----
-name: ship
-description: Branch, commit, multi-agent parallel code review, fix, lint/typecheck, docs update, push and PR — a repo-agnostic shipping gate. Use when the user says "ship this", "ship it", "review and ship", "manda in review", or invokes /ship.
-user-invocable: true
----
-
 # ship
 
 Takes the work in the tree to a reviewed, documented, pushed branch, plus a report of what needs the user.
 This file only orchestrates: the reviewers do the reviewing.
-Repo config lives in `.agents/ship.md` and the agents under `.claude/agents/ship/`.
+Repo config lives in `.agents/ship.md` and repo-specific agent prompts under `.agents/ship/agents/`.
+Resolve every reference in this guide from the repository root; read each agent document in full when delegating.
 
 ## 0 — Version and config
 
@@ -16,7 +11,7 @@ Repo config lives in `.agents/ship.md` and the agents under `.claude/agents/ship
 Its version is the top `## vN` heading of its `CHANGELOG.md`; this repo's is the number in `.agents/repo-setup-version` (missing = none).
 
 - This repo is behind → say "repo-setup vN, this repo has vM / none", list the `CHANGELOG.md` lines in between, and ask to update.
-  Yes → read `changelog/vK.md` for each missing version, oldest first, and apply it: copy what it says to copy; for a changed template, propose the edit to this repo's filled copy only where it fits, show it, and apply what the user accepts. Then write `N` to `.agents/repo-setup-version`, commit it alone (`chore: update repo-setup to vN`), continue.
+  Yes → before applying any historical copy instructions, follow the conflict-safe preflight in `changelog/v15.md` when crossing v15. Then read `changelog/vK.md` for each missing version, oldest first, and apply it: copy what it says to copy; for a changed template, propose the edit to this repo's filled copy only where it fits, show it, and apply what the user accepts. Only after every migration and accepted change completes, write `N` to `.agents/repo-setup-version`, commit it alone (`chore: update repo-setup to vN`), continue.
   No → continue with what's there.
 - Source folder missing (another machine) → skip silently.
 
@@ -48,9 +43,9 @@ Never `--no-verify`: a failing hook means fix the cause.
 Launch in a single message, in parallel:
 
 - every reviewer listed in `ship.md`;
-- the bundled ones — `references/review-general.md`, `references/review-standards.md`, `references/review-spec.md` — as `general-purpose` subagents, prompt = the whole file.
+- the bundled ones — `.agents/ship/references/review-general.md`, `.agents/ship/references/review-standards.md`, `.agents/ship/references/review-spec.md` — as `general-purpose` subagents, prompt = the whole file.
 
-For each role in `.agents/ship.md`, choose `light` or `standard` for this run from its scope, the intent, and the size/scope of the code diff. Use `deep` only when `.agents/ship.md` explicitly enables it. Ignore docs, maps, generated files, and other non-code changes when judging diff size. A small change can use `light` when it does not touch that role's risk; use `standard` when the intent affects that risk or the code change is broad. Resolve the chosen level through the active runtime's mapping in `.agents/ship.md`; if missing, ask rather than guess.
+For each role in `.agents/ship.md`, choose `light` or `standard` for this run from its scope, the intent, and the size/scope of the code diff. Use `deep` only when `.agents/ship.md` explicitly enables it. Ignore docs, maps, generated files, and other non-code changes when judging diff size. A small change can use `light` when it does not touch that role's risk; use `standard` when the intent affects that risk or the code change is broad. Resolve the chosen level through the active runtime's mapping in `.agents/ship.md`; if missing or the active runtime cannot launch the mapped model/effort, ask rather than guess or silently substitute.
 
 Launch all applicable reviewers together in one parallel delegation. Give each its instructions, scope, resolved model/effort, base branch, `git diff <base>...HEAD` to run itself (never paste the diff), intent verbatim, and changed-file list minus ignored paths.
 Nothing else: never the implementer's reasons for a design or test-layer choice ("the query didn't change, so unit is enough"). Reviewers judge those choices themselves.
@@ -59,7 +54,7 @@ Reviewers are read-only.
 ## 4 — Fix
 
 Only you edit, one fix at a time, after every reviewer has returned: parallel edits corrupt each other.
-Fix every finding of any severity, without asking, except those in `references/fix-rules.md` and `ship.md`'s Never fix; those stay open.
+Fix every finding of any severity, without asking, except those in `.agents/ship/references/fix-rules.md` and `ship.md`'s Never fix; those stay open.
 Commit the round (`fix: address review findings`).
 
 Then a second round, fresh agents: only the reviewers that had findings, plus `review-general`, each told to review the fix commits (`git diff <sha before the fixes>..HEAD`), not the whole branch. Add a **settled** list: one line per earlier finding, `file:line — decision — why`.
@@ -76,14 +71,14 @@ Max 2 rounds; whatever is still unresolved stays open.
 - Exit code ≠ 0 means failed, whatever the output says.
 - A command marked `only if the diff touches <paths>` runs only when a changed file matches; otherwise skip it and say so in the report.
 - Toolchain missing (`node_modules`, `.venv`) → run the install once. "Module not found" is setup, never a finding.
-- Lint/typecheck and extra gate failures: fix and re-run, max 3 rounds, then blocking. A gate fix that falls under `references/fix-rules.md` stays open instead.
+- Lint/typecheck and extra gate failures: fix and re-run, max 3 rounds, then blocking. A gate fix that falls under `.agents/ship/references/fix-rules.md` stays open instead.
 - Failing tests: never fix on your own. Blocking: the test may be right and the code wrong, and that call is the user's.
 - A fix here changed behaviour, not just formatting or types (typically a gate fix) → one `review-general` pass on those changes only, its findings handled as in step 4, no further round.
 - Stash only by name: `git stash push -u -m "<name>"` … `git stash pop "stash^{/<name>}"`.
 
 ## 6 — Verify
 
-Diff with a runtime effect → follow `references/verify.md`. Otherwise skip, one line in the report.
+Diff with a runtime effect → follow `.agents/ship/references/verify.md`. Otherwise skip, one line in the report.
 
 ## 7 — Docs
 
@@ -92,7 +87,7 @@ Launch the `docs-engineer` agent at `light`, resolved through the active runtime
 ## 8 — Deliver
 
 Push (`git push -u origin HEAD`) and open the PR, with the tracker steps and blocking gate from `ship.md`'s Delivery; a gate that says "ask first" is honoured exactly.
-The PR body uses the `pr` skill, never the ship report:
+The PR body uses `.agents/pr/guide.md`, also discoverable as the `pr` skill in both runtimes, never the ship report:
 
 - **Body**: the `pr` skill owns format and length. Proof per `docs/agents/evidence.md` (missing → each test file + one line on what it covers), preferring the verifiers' captures in `$(git rev-parse --git-dir)/ship-evidence/`. The diff changes anything a person sees (UI, or generated images, diagrams, PDFs, emails) → visual evidence is mandatory, attached with `gh pr edit <n> --attach <file>`; can't produce it → blocking, ask. Every open finding goes in Merge Danger.
 - **Title**: the intent, in the commit convention.

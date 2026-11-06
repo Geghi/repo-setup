@@ -1,6 +1,6 @@
 <!--
 TEMPLATE — the test reviewer. Copy to
-`.claude/agents/ship/review-tests/review-tests.md`, fill every {{PLACEHOLDER}},
+`.agents/ship/agents/review-tests/review-tests.md`, fill every {{PLACEHOLDER}},
 and delete this comment.
 
 Worth having in almost every repo, and the one specialist to add first: test
@@ -168,7 +168,7 @@ otherwise:
 
 ## Output
 
-Follow `.claude/skills/ship/references/output.md`, plus:
+Follow `.agents/ship/references/output.md`, plus:
 
 - `why` must be the concrete failure: which regression now goes undetected, or what
   change to the production code would NOT make this test red.
