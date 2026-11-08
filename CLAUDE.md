@@ -23,3 +23,11 @@
 - Name another skill's concept in one place only (e.g. the `pr` skill's Merge Danger, only in ship's deliver step).
 - Agent output: hard limits (fields, word counts), not "be concise".
 - Trim: instructions, not justifications. One short sentence per line.
+
+## Multica issues
+
+- Check Multica when asked about tracked work, including work in another repository.
+- Run `multica workspace list --output json` to find the workspace; pass `--workspace-id <id>` to every subsequent command.
+- Find issues with `multica --workspace-id <id> issue search <query>` or `issue list --output json`; paginate lists with `--limit 100` and `--offset` while `has_more` is true.
+- Inspect the parent and staged sub-issues with `issue get <identifier>` and `issue children <identifier>`; check comments and linked pull requests with `issue comment list <identifier>` and `issue pull-requests <identifier>`.
+- Treat tracker status as reported status, and check linked work before claiming it is deployed or verified.
