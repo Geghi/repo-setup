@@ -31,3 +31,9 @@ Rules for repos with a server / API layer. Format and usage: [README.md](README.
 - **Problem:** a server-side cached read serves stale role/billing/config after a mutation.
 - **Applies when:** the repo caches reads by tag/key on the server.
 - **Check:** conformance test: every writer of a cached table calls the matching invalidation helper.
+
+## Query round trips in one entry flow
+- **Problem:** a route, cron, queue job or worker makes N database round trips where one embedded read, join or batched call would answer in N-1 or fewer — avoidable delay and cost on every run of the flow, and it compounds in loops (N+1).
+- **Applies when:** the repo has any server / API / cron / queue code with a database reachable from an entry point.
+- **Check:** no practical lint / dataflow rule today — enforcement is review-time, via the shipped `query-flow-review` skill (the `review-query-flow` row in the ship reviewer table). It traces the flow, inventories the requests per scenario and flags the avoidable ones.
+- **False positives:** separate reads that are necessary — taken under a lock or inside a transaction for atomicity, a deliberate freshness refetch after write, or independent failure domains where one merged call would lose per-item results to a single failure.

@@ -42,6 +42,7 @@ For each role, define its responsibility/scope, category (bundled, specialist, v
 | `verifier` | verifier | Runtime verification | `.agents/ship/references/verifier.md` |
 | `docs-engineer` | docs | Update repo documentation | `.agents/ship/agents/docs-engineer/docs-engineer.md` |
 | `{{review-name}}` | specialist | {{the single recurring risk it owns}} | `.agents/ship/agents/{{review-name}}/{{review-name}}.md` |
+| `review-query-flow` | specialist | Database round trips in the entry points the diff touches (route, cron, queue, worker): unnecessary split queries (prefer embedded reads/joins), repeated reads, discarded data, N+1, refetch-after-RETURNING. Applies when the changed files include data access (reads or writes); self-exits otherwise. | `.agents/ship/agents/review-query-flow/review-query-flow.md` |
 
 ## Commands
 

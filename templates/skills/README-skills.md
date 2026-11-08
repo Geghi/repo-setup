@@ -20,3 +20,4 @@ The remaining skills are copied as-is (no placeholders), into `.claude/skills/<n
 | `improve-codebase-architecture/` | 04-docs | mattpocock/skills, needs `codebase-design` + `grilling` + `domain-modeling` (glossary → `CONTEXT.md`) |
 | `retro/` | any | mattpocock/skills — `/retro`: session → environment improvements |
 | `writing-for-agents/` | any | mattpocock/skills, needed by `retro` |
+| `query-flow-review/` | any | ours — works both standalone and as ship specialist reviewer |
